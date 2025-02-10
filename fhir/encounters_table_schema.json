@@ -1,0 +1,670 @@
+[
+  {
+    "name": "encounter_id",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "lastupdated",
+    "mode": "",
+    "type": "TIMESTAMP",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "hl7_message_date_time",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "hl7_message_date_time_UTC",
+    "mode": "",
+    "type": "TIMESTAMP",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "hl7_message_control_id",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "meta_latest_source_date_time",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "intermediate_snapshot_creation_date_time",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "final_fhir_write_date_time",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "final_fhir_commit_date_time",
+    "mode": "",
+    "type": "TIMESTAMP",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "encounter_version_id",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "version_id_fingerprint",
+    "mode": "",
+    "type": "INTEGER",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "consent_coid",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "meta_action_code",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "hl7_v2_source_interface",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "patient_account_num",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "patient_primary_id",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "network_mnemonic",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "medical_record_num",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "coid",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "facility_mnemonic",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "fhir_visit_status",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "fhir_patient_class_code",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "fhir_patient_class_display",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "patient_type",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "admission_type",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "patient_class_code",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "account_status_code",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "vip_indicator_code",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "financial_class_code",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "mode_of_arrival_code",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "accommodation_code",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "accommodation_code_category",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "hospital_service_type_code",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "hospital_service_type_text",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "admit_source_code",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "discharge_disposition",
+    "mode": "REPEATED",
+    "type": "RECORD",
+    "description": "",
+    "fields": [
+      {
+        "name": "code",
+        "mode": "",
+        "type": "STRING",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "display",
+        "mode": "",
+        "type": "STRING",
+        "description": "",
+        "fields": []
+      }
+    ]
+  },
+  {
+    "name": "patient_id",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "appointment_id",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "account_id",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "deceased_date_time",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "admission_date",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "discharge_date",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "is_valid_date_ind",
+    "mode": "",
+    "type": "BOOLEAN",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "alt_admission_date_time",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "hl7_admission_date_time",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "alt_discharge_date_time",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "hl7_discharge_date_time",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "reason_for_visit_text",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "mt_reason_for_visit_code",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "patient_location",
+    "mode": "REPEATED",
+    "type": "RECORD",
+    "description": "",
+    "fields": [
+      {
+        "name": "location_id",
+        "mode": "",
+        "type": "STRING",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "mnemonic",
+        "mode": "",
+        "type": "STRING",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "physical_type",
+        "mode": "",
+        "type": "STRING",
+        "description": "",
+        "fields": []
+      }
+    ]
+  },
+  {
+    "name": "emergency_department",
+    "mode": "",
+    "type": "RECORD",
+    "description": "",
+    "fields": [
+      {
+        "name": "edm_arrived_date_time",
+        "mode": "",
+        "type": "STRING",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "edm_triaged_date_time",
+        "mode": "",
+        "type": "STRING",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "edm_departure_date_time",
+        "mode": "",
+        "type": "STRING",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "coid",
+        "mode": "",
+        "type": "STRING",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "priority_rank",
+        "mode": "",
+        "type": "STRING",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "priority_code",
+        "mode": "",
+        "type": "STRING",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "priority_text",
+        "mode": "",
+        "type": "STRING",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "edm_reason_for_visit_code",
+        "mode": "",
+        "type": "STRING",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "edm_reason_for_visit_text",
+        "mode": "",
+        "type": "STRING",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "departure_info",
+        "mode": "",
+        "type": "RECORD",
+        "description": "",
+        "fields": [
+          {
+            "name": "departure_disposition_code",
+            "mode": "",
+            "type": "STRING",
+            "description": "",
+            "fields": []
+          },
+          {
+            "name": "departure_disposition_text",
+            "mode": "",
+            "type": "STRING",
+            "description": "",
+            "fields": []
+          },
+          {
+            "name": "departure_disposition_display",
+            "mode": "",
+            "type": "STRING",
+            "description": "",
+            "fields": []
+          },
+          {
+            "name": "departure_condition_code",
+            "mode": "",
+            "type": "STRING",
+            "description": "",
+            "fields": []
+          },
+          {
+            "name": "departure_condition_text",
+            "mode": "",
+            "type": "STRING",
+            "description": "",
+            "fields": []
+          },
+          {
+            "name": "departure_condition_display",
+            "mode": "",
+            "type": "STRING",
+            "description": "",
+            "fields": []
+          },
+          {
+            "name": "departure_comments",
+            "mode": "",
+            "type": "STRING",
+            "description": "",
+            "fields": []
+          }
+        ]
+      },
+      {
+        "name": "patient_location",
+        "mode": "",
+        "type": "RECORD",
+        "description": "",
+        "fields": [
+          {
+            "name": "treatment_room",
+            "mode": "",
+            "type": "RECORD",
+            "description": "",
+            "fields": [
+              {
+                "name": "room_code",
+                "mode": "",
+                "type": "STRING",
+                "description": "",
+                "fields": []
+              },
+              {
+                "name": "room_text",
+                "mode": "",
+                "type": "STRING",
+                "description": "",
+                "fields": []
+              }
+            ]
+          },
+          {
+            "name": "edm_location",
+            "mode": "",
+            "type": "RECORD",
+            "description": "",
+            "fields": [
+              {
+                "name": "location_code",
+                "mode": "",
+                "type": "STRING",
+                "description": "",
+                "fields": []
+              },
+              {
+                "name": "location_text",
+                "mode": "",
+                "type": "STRING",
+                "description": "",
+                "fields": []
+              }
+            ]
+          },
+          {
+            "name": "reserved_room",
+            "mode": "",
+            "type": "RECORD",
+            "description": "",
+            "fields": [
+              {
+                "name": "room_code",
+                "mode": "",
+                "type": "STRING",
+                "description": "",
+                "fields": []
+              },
+              {
+                "name": "room_text",
+                "mode": "",
+                "type": "STRING",
+                "description": "",
+                "fields": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "edm_transport",
+        "mode": "",
+        "type": "RECORD",
+        "description": "",
+        "fields": [
+          {
+            "name": "transport_company_code",
+            "mode": "",
+            "type": "STRING",
+            "description": "",
+            "fields": []
+          },
+          {
+            "name": "transport_company_display",
+            "mode": "",
+            "type": "STRING",
+            "description": "",
+            "fields": []
+          },
+          {
+            "name": "transport_id_code",
+            "mode": "",
+            "type": "STRING",
+            "description": "",
+            "fields": []
+          },
+          {
+            "name": "transport_id_display",
+            "mode": "",
+            "type": "STRING",
+            "description": "",
+            "fields": []
+          },
+          {
+            "name": "transport_call_date_time",
+            "mode": "",
+            "type": "STRING",
+            "description": "",
+            "fields": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "registration_query",
+    "mode": "REPEATED",
+    "type": "RECORD",
+    "description": "",
+    "fields": [
+      {
+        "name": "mnemonic",
+        "mode": "",
+        "type": "STRING",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "question",
+        "mode": "",
+        "type": "STRING",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "response",
+        "mode": "",
+        "type": "STRING",
+        "description": "",
+        "fields": []
+      }
+    ]
+  },
+  {
+    "name": "insert_timestamp",
+    "mode": "",
+    "type": "TIMESTAMP",
+    "description": "",
+    "fields": []
+  }
+]

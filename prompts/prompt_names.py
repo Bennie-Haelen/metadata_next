@@ -1,0 +1,2 @@
+GET_TABLE_DESCRIPTION = "get_table_description.txt"
+GENERATE_RESOURCE_SCHEMA_DESCRIPTIONS = "generate_resource_schema_with_descriptions.txt"

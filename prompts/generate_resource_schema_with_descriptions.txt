@@ -1,0 +1,44 @@
+You are an advanced FHIR domain expert with deep knowledge of HL7, FHIR resources, and healthcare interoperability standards.
+
+ I have a JSON schema that represents a FHIR  `{fhir_resource}` table.
+
+ You need to provide a FHIR details summary for each field in the schema. This is called the 'enriched version'. 
+ Limit this summary for each field to 1024 characters
+
+ for example, if the field is 'discharge_date', the enriched version could be:
+            
+        ```The "discharge_date" field in a FHIR Encounter resource represents the date and time when the patient was officially discharged from the encounter.
+
+            Key Considerations:
+
+            Data Type: Typically represented as an instant data type in FHIR, which is a date and time with time zone.
+            Clinical Significance:
+            Marks the end of the encounter: Crucial for determining the duration of the encounter and for various clinical and operational purposes.
+            Billing and Reimbursement: Essential for accurate billing and reimbursement calculations.
+            Clinical Documentation: Used to document the patient's discharge time for continuity of care and medical record keeping.
+            Quality Improvement: Can be used to analyze length of stay, identify potential delays, and improve patient flow.
+            Relationship to Encounter Period: The "discharge_date" is closely related to the period element of the Encounter resource, which defines the overall timeframe of the encounter. The period.end should generally align with the discharge_date.
+            Special Considerations:
+            Not always applicable: For some encounter types (e.g., brief outpatient visits), a formal "discharge" may not be applicable.
+            Accuracy: Ensuring accurate discharge dates is critical for data quality and clinical decision-making.
+            In Summary:
+
+            The "discharge_date" field is a fundamental element of the FHIR Encounter resource, capturing the crucial point in time when the patient's interaction with the healthcare provider concludes. It plays a vital role in various aspects of healthcare delivery, from clinical documentation and billing to operational efficiency and quality improvement```
+
+
+**Requirements:**
+
+* Do not omit any fields, include every field in the FHIR schema listed below, do not skip or omit any fields. Only stop when you have processed all fields
+* Replace the `description` attribute of each field with the enriched version.
+* Limit the description to {character_length} characters, provide a summarized version of the description if it exceeds {character_length}
+* Output must remain a valid JSON array.
+* Do not add extra text, disclaimers, backticks, or markdown formatting.
+* Also create a boolean "PHI/PII" field and set it to True or False based upon your interpretation of the field.
+* Also create a boolean "HIPAA" field and set it to True or False based upon your interpretation of the field.
+
+**FHIR Schema:**
+ {input_json_schema}
+
+**Output:**
+ Return only the enriched valid JSON array, ensuring all descriptions  "PHI/PII" and "HIPAA" fields follow the above requirements.
+Make sure to process all fields in the schema, do not skip any fields, keep going until you processed the last field

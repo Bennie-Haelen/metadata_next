@@ -6,6 +6,10 @@ __pycache__/
 # C extensions
 *.so
 
+# HCA specific
+.env
+credentials.json
+
 # Distribution / packaging
 .Python
 build/

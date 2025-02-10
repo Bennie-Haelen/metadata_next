@@ -1,0 +1,6 @@
+
+python main.py --yaml "yaml/encounters.yaml"
+
+bq --project_id hca-sandbox query --use_legacy_sql=false < "sql/alter_table.sql"
+bq --project_id hca-sandbox query --use_legacy_sql=false < "sql/create_table.sql"
+

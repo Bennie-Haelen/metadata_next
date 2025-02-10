@@ -1,0 +1,28 @@
+# YAML conifguration file for MetadataGenerator app
+
+# Application settings
+app:
+  app_name: MetadataGenerator
+  app_version: 0.1.1
+
+# GCP Configuration
+bigquery:
+  project_id: 'hca-sandbox'
+  dataset_id: 'hca_metadata_pot'
+  table_id: 'fhir_encounters'
+  location: 'us'
+  mode: "alter"
+
+# Logging configuration
+logging:
+    debug: Info
+    file: "metadata_generator.log"
+
+# File paths
+files:
+  input_schema: "fhir/encounters_table_schema.json"
+  output_schema: "fhir/schema_with_descriptions.json"
+  sql_output: "sql/alter_table.sql"
+
+llm:
+  model: "gemini-1.5-pro"

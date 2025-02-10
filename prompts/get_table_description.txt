@@ -1,0 +1,8 @@
+Generate a complete description for a BigQuery table that stores FHIR (Fast Healthcare Interoperability Resources) data.  
+The table name (which corresponds to a FHIR resource type) is: {table_name}.
+            
+The description should be suitable for use in a BigQuery table schema's OPTIONS(description="...").  
+Therefore, it **MUST NOT** contain newline characters (\\n) or carriage return characters (\\r). Replace any newlines with spaces.
+
+Output the description ONLY. Do not include any other text or commentary.
+Th description should be limit to {description_length} characters.
