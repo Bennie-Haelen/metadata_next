@@ -283,14 +283,19 @@ class FHIRResourceManager:
         
         # Send request to LLM
         logger.info(f"Invoking the LLM model...")
+        if self.llm_model is None:
+            logger.error(f"LLM model not found.")
+            return None
         response = self.llm_model.invoke(input=messages).content
         logger.info(f"LLM invocation completed successfully...")
+
 
         enriched_chunk = ""
         # Parse response and extend enriched schema
         try:
             # Use the JSsonOutputParser to extract the JSON array from the response,
             # and add it to the enriched schema
+            logger.info("Invoking JsonOutputParser to parse the response...")
             enriched_chunk = parser.parse(response)
 
         except json.JSONDecodeError as e:

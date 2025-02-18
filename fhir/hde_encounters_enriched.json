@@ -1,140 +1,246 @@
 [
   {
+    "name": "encounter_id",
+    "type": "STRING",
+    "description": "The 'encounter_id' field is a unique identifier assigned to a specific encounter. It serves as the primary key for referencing and retrieving encounter information. This ID is crucial for tracking patient visits, linking related data, and ensuring data integrity across systems. It's typically a UUID or a system-generated identifier. This field is essential for data management and interoperability.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "lastupdated",
+    "type": "TIMESTAMP",
+    "description": "The 'lastupdated' field indicates the date and time when the encounter record was last modified. This timestamp is essential for tracking changes, auditing data, and ensuring data consistency. It helps determine the most recent version of the encounter information. This field is crucial for data governance and synchronization across systems.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "hl7_message_date_time",
+    "type": "DATETIME",
+    "description": "The 'hl7_message_date_time' field represents the date and time when the HL7 message related to the encounter was created. This field is important for tracing the origin and context of the encounter data. It helps in understanding the flow of information from the source system. It is often used for debugging and auditing purposes.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "hl7_message_date_time_UTC",
+    "type": "DATETIME",
+    "description": "The 'hl7_message_date_time_UTC' field represents the date and time when the HL7 message related to the encounter was created, specifically in Coordinated Universal Time (UTC). This ensures consistency and avoids ambiguity due to time zone differences. It's crucial for global interoperability and data synchronization across different time zones.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "hl7_message_control_id",
+    "type": "STRING",
+    "description": "The 'hl7_message_control_id' field is a unique identifier assigned to the HL7 message associated with the encounter. This ID is used for tracking and managing HL7 messages within the system. It helps in correlating messages and ensuring proper message delivery and processing. It is essential for message-based integration and error tracking.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "meta_latest_source_date_time",
+    "type": "DATETIME",
+    "description": "The 'meta_latest_source_date_time' field indicates the most recent date and time when the encounter data was received from the source system. This field is useful for tracking data provenance and identifying the freshest data available. It helps in resolving data conflicts and ensuring data accuracy. It is important for data warehousing and reporting.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "intermediate_snapshot_creation_date_time",
+    "type": "DATETIME",
+    "description": "The 'intermediate_snapshot_creation_date_time' field represents the date and time when an intermediate snapshot of the encounter data was created. This is often used in data processing pipelines for versioning and recovery purposes. It allows for tracking changes and reverting to previous states if needed. It is useful for data auditing and debugging.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "final_fhir_write_date_time",
+    "type": "DATETIME",
+    "description": "The 'final_fhir_write_date_time' field indicates the date and time when the encounter data was written to the FHIR repository. This timestamp is crucial for tracking the completion of the FHIR transformation and loading process. It helps in monitoring data integration and ensuring data availability. It is important for data quality and performance monitoring.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "final_fhir_commit_date_time",
+    "type": "DATETIME",
+    "description": "The 'final_fhir_commit_date_time' field represents the date and time when the encounter data was committed to the FHIR repository. This timestamp signifies the finalization of the data transaction and ensures data persistence. It is essential for data integrity and reliability. It is used for auditing and recovery purposes.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "encounter_version_id",
+    "type": "STRING",
+    "description": "The 'encounter_version_id' field is an identifier that represents a specific version of the encounter resource. This is useful for tracking changes to the encounter over time and for auditing purposes. It allows systems to retrieve specific versions of the encounter data. It is important for data governance and version control.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "version_id_fingerprint",
+    "type": "INTEGER",
+    "description": "A hash or fingerprint representing the version of the Encounter resource. Used for change tracking and data integrity. It helps identify if the resource has been modified. Not directly PHI/PII but indirectly related through the encounter data.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "consent_coid",
+    "type": "STRING",
+    "description": "The COID (Corporate Object Identifier) associated with the consent related to this encounter.  Links the encounter to specific patient consent records. Could indirectly reveal PHI/PII depending on the consent details.",
+    "PHI/PII": true,
+    "HIPAA": true
+  },
+  {
+    "name": "meta_action_code",
+    "type": "STRING",
+    "description": "A code indicating the action performed on the Encounter resource (e.g., create, update, delete). Used for auditing and tracking changes to the encounter data. Not directly PHI/PII.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "hl7_v2_source_interface",
+    "type": "STRING",
+    "description": "Identifies the HL7 v2 interface from which the encounter data originated. Useful for tracing data lineage and troubleshooting integration issues. Not directly PHI/PII.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "patient_account_num",
+    "type": "STRING",
+    "description": "The patient's account number associated with the encounter. Used for billing and financial tracking. Directly linked to the patient and their financial information, thus PHI/PII.",
+    "PHI/PII": true,
+    "HIPAA": true
+  },
+  {
     "name": "patient_primary_id",
     "type": "STRING",
-    "description": "The 'patient_primary_id' field uniquely identifies a patient within the healthcare system. It is crucial for linking patient records across different encounters and healthcare services. This identifier ensures that all patient-related data is accurately associated with the correct individual, facilitating continuity of care and data integrity. It is a key element in patient management systems and is often used in conjunction with other identifiers like medical record numbers.",
+    "description": "The patient's primary identifier. This is a core piece of PHI as it directly identifies the patient. It is essential for linking the encounter to the correct patient record.",
     "PHI/PII": true,
     "HIPAA": true
   },
   {
     "name": "network_mnemonic",
     "type": "STRING",
-    "description": "The 'network_mnemonic' field represents a shorthand or code used to identify the healthcare network or system within which the encounter takes place. This field is important for distinguishing between different healthcare networks, especially in large organizations with multiple facilities. It aids in routing and managing patient data across various systems and ensures that encounters are correctly attributed to the appropriate network.",    "PHI/PII": false,
+    "description": "A short code or abbreviation representing the network associated with the encounter. Could indirectly relate to PHI/PII depending on the network's function.",
+    "PHI/PII": false,
     "HIPAA": false
   },
   {
     "name": "medical_record_num",
     "type": "STRING",
-    "description": "The 'medical_record_num' field is a unique identifier assigned to a patient's medical record within a healthcare facility. It is essential for accessing and managing a patient's health information, ensuring that all clinical data is accurately linked to the correct individual. This number is used extensively in clinical documentation, billing, and reporting processes, and is a critical component of patient identity management.",
+    "description": "The patient's medical record number (MRN). A key identifier used to locate the patient's complete medical history. Directly identifies the patient and is therefore PHI/PII.",
     "PHI/PII": true,
     "HIPAA": true
   },
   {
     "name": "coid",
     "type": "STRING",
-    "description": "The 'coid' field, or Care Organization Identifier, is used to uniquely identify the organization responsible for the patient's care during the encounter. This identifier is crucial for administrative and billing purposes, ensuring that the correct organization is credited for the services provided. It also plays a role in data exchange and interoperability, allowing for accurate tracking of care across different organizations.",
+    "description": "Corporate Object Identifier. A unique identifier assigned to the encounter within the organization. May indirectly relate to PHI/PII depending on the system.",
     "PHI/PII": false,
     "HIPAA": false
   },
   {
     "name": "facility_mnemonic",
     "type": "STRING",
-    "description": "The 'facility_mnemonic' field is a code or abbreviation used to identify the specific healthcare facility where the encounter occurs. This field is important for distinguishing between different locations within a healthcare network, aiding in the organization and management of patient data. It ensures that encounters are correctly attributed to the appropriate facility, which is essential for operational, clinical, and billing purposes.",
+    "description": "A short code or abbreviation representing the facility where the encounter occurred. Not directly PHI/PII, but indirectly related through the encounter context.",
     "PHI/PII": false,
     "HIPAA": false
   },
   {
     "name": "fhir_visit_status",
     "type": "STRING",
-    "description": "The 'fhir_visit_status' field indicates the current status of the patient's encounter, such as 'planned', 'in-progress', 'on-hold', 'completed', or 'cancelled'. This status is crucial for managing patient flow and resource allocation within healthcare facilities. It provides real-time information about the encounter's progress, aiding in clinical decision-making and operational efficiency. Accurate status tracking is essential for effective patient care and coordination.",
+    "description": "The 'fhir_visit_status' field represents the status of the encounter (e.g., planned, in-progress, completed, cancelled). It provides information about the current state of the patient's visit. This is often mapped from legacy visit status codes to FHIR value sets. Crucial for workflow management and reporting. PHI/PII: False. HIPAA: False.",
     "PHI/PII": false,
     "HIPAA": false
   },
   {
     "name": "fhir_patient_class_code",
     "type": "STRING",
-    "description": "The 'fhir_patient_class_code' field categorizes the type of patient encounter, such as 'inpatient', 'outpatient', or 'emergency'. This classification is vital for determining the level of care required, resource allocation, and billing processes. It helps healthcare providers understand the context of the encounter and tailor their services accordingly. Accurate classification ensures appropriate care delivery and financial management.",
+    "description": "The 'fhir_patient_class_code' field represents the classification of the patient's encounter (e.g., inpatient, outpatient, emergency). It categorizes the type of service being provided. This code is often mapped from legacy systems. Impacts billing, resource allocation, and clinical workflows. PHI/PII: False. HIPAA: False.",
     "PHI/PII": false,
     "HIPAA": false
   },
   {
     "name": "fhir_patient_class_display",
     "type": "STRING",
-    "description": "The 'fhir_patient_class_display' field provides a human-readable description of the patient class code, such as 'Inpatient', 'Outpatient', or 'Emergency'. This field enhances the interpretability of the patient class code, making it easier for healthcare providers and administrative staff to understand the nature of the encounter. It supports effective communication and documentation within the healthcare system.",
+    "description": "The 'fhir_patient_class_display' field provides a human-readable description of the patient class code (e.g., 'Inpatient', 'Outpatient'). It complements the code by offering a clear understanding of the encounter type. Improves data interpretability and usability. PHI/PII: False. HIPAA: False.",
     "PHI/PII": false,
     "HIPAA": false
   },
   {
     "name": "patient_type",
     "type": "STRING",
-    "description": "The 'patient_type' field describes the category of the patient encounter, such as 'new', 'established', or 'referral'. This classification is important for understanding the patient's relationship with the healthcare provider and tailoring care accordingly. It influences clinical decision-making, resource allocation, and billing processes. Accurate patient type classification supports effective care delivery and operational efficiency.",
+    "description": "The 'patient_type' field specifies the type of patient associated with the encounter. This could indicate if the patient is a new patient, a follow-up, or other relevant classifications. This is often specific to the organization. Impacts scheduling and resource allocation. PHI/PII: False. HIPAA: False.",
     "PHI/PII": false,
     "HIPAA": false
   },
   {
     "name": "admission_type",
     "type": "STRING",
-    "description": "The 'admission_type' field specifies the reason for the patient's admission, such as 'emergency', 'urgent', 'elective', or 'newborn'. This information is crucial for understanding the context of the encounter and planning appropriate care. It influences clinical decision-making, resource allocation, and billing processes. Accurate admission type classification supports effective care delivery and operational efficiency.",
+    "description": "The 'admission_type' field indicates the reason or type of admission for the encounter (e.g., emergency, elective, urgent). It provides context for the encounter's initiation. Essential for understanding the circumstances leading to the encounter. PHI/PII: False. HIPAA: False.",
     "PHI/PII": false,
     "HIPAA": false
   },
   {
     "name": "patient_class_code",
     "type": "STRING",
-    "description": "The 'patient_class_code' field categorizes the type of patient encounter, such as 'inpatient', 'outpatient', or 'emergency'. This classification is vital for determining the level of care required, resource allocation, and billing processes. It helps healthcare providers understand the context of the encounter and tailor their services accordingly. Accurate classification ensures appropriate care delivery and financial management.",
+    "description": "The 'patient_class_code' field represents a coded value for the patient's class during the encounter (e.g., inpatient, outpatient). It's a standardized way to categorize the encounter type. Used for billing, reporting, and resource management. PHI/PII: False. HIPAA: False.",
     "PHI/PII": false,
     "HIPAA": false
   },
   {
     "name": "account_status_code",
     "type": "STRING",
-    "description": "The 'account_status_code' field indicates the current status of the patient's account, such as 'active', 'inactive', or 'closed'. This status is important for managing billing and financial processes within healthcare facilities. It provides real-time information about the account's status, aiding in financial decision-making and operational efficiency. Accurate status tracking is essential for effective financial management and patient care.",
+    "description": "The 'account_status_code' field indicates the status of the patient's account associated with the encounter (e.g., open, closed, pending). It reflects the financial aspect of the encounter. Important for revenue cycle management and billing processes. PHI/PII: False. HIPAA: False.",
     "PHI/PII": false,
     "HIPAA": false
   },
   {
     "name": "vip_indicator_code",
     "type": "STRING",
-    "description": "The 'vip_indicator_code' field identifies whether a patient is considered a VIP (Very Important Person) within the healthcare facility. This designation may influence the level of service and attention provided to the patient. It is important for managing patient expectations and ensuring that VIP patients receive appropriate care. Accurate VIP designation supports effective patient management and operational efficiency.",
-    "PHI/PII": false,
-    "HIPAA": false
+    "description": "The 'vip_indicator_code' field signifies whether the patient is designated as a VIP. It may influence the level of service or attention provided. Impacts resource allocation and patient care protocols. Could be considered sensitive. PHI/PII: True. HIPAA: True.",
+    "PHI/PII": true,
+    "HIPAA": true
   },
   {
     "name": "financial_class_code",
     "type": "STRING",
-    "description": "The 'financial_class_code' field categorizes the patient's financial responsibility or insurance coverage, such as 'self-pay', 'Medicare', or 'private insurance'. This classification is crucial for billing and reimbursement processes, ensuring that charges are accurately attributed to the correct payer. It influences financial decision-making and operational efficiency within healthcare facilities. Accurate financial class classification supports effective financial management and patient care.",
-    "PHI/PII": false,
-    "HIPAA": false
+    "description": "The 'financial_class_code' field represents the patient's financial class or insurance coverage (e.g., Medicare, Medicaid, private insurance). It determines the payer responsible for the encounter's costs. Crucial for billing and reimbursement. PHI/PII: True. HIPAA: True.",
+    "PHI/PII": true,
+    "HIPAA": true
   },
   {
     "name": "mode_of_arrival_code",
     "type": "STRING",
-    "description": "The 'mode_of_arrival_code' field describes how the patient arrived at the healthcare facility, such as 'ambulance', 'walk-in', or 'transfer'. This information is important for understanding the context of the encounter and planning appropriate care. It influences clinical decision-making, resource allocation, and operational efficiency. Accurate mode of arrival classification supports effective care delivery and patient management.",
+    "description": "The 'mode_of_arrival_code' field indicates how the patient arrived for the encounter (e.g., ambulance, walk-in, car). It provides context for the encounter's circumstances. Useful for resource planning and emergency response. PHI/PII: False. HIPAA: False.",
     "PHI/PII": false,
     "HIPAA": false
   },
   {
     "name": "accommodation_code",
     "type": "STRING",
-    "description": "The \"accommodation_code\" field in a FHIR Encounter resource represents a code that identifies the type of accommodation provided to the patient during the encounter. This could include different types of hospital rooms or wards. It is crucial for resource allocation, billing, and understanding the level of care provided. This field helps in categorizing the encounter based on the accommodation type, which can influence the cost and type of care received.",
+    "description": "The 'accommodation_code' field represents a coded value specifying the type of accommodation provided during the encounter (e.g., private room, ward). It uses a defined code system. This is used for billing and resource allocation. It is often linked to organizational policies. The code provides a standardized way to represent accommodation types. It is used for reporting and analysis of resource utilization.",
     "PHI/PII": false,
     "HIPAA": false
   },
   {
     "name": "accommodation_code_category",
     "type": "STRING",
-    "description": "The \"accommodation_code_category\" field categorizes the accommodation code into broader categories, such as general ward, private room, or ICU. This categorization aids in reporting, analysis, and operational management by providing a higher-level view of the types of accommodations utilized during patient encounters. It is useful for healthcare providers to manage resources and for insurers to determine coverage levels.",
+    "description": "The 'accommodation_code_category' field provides a broader categorization of the accommodation code. This field helps in grouping accommodation types for reporting and analysis. It is useful for understanding the overall distribution of accommodation types. It can be used to derive insights into resource allocation and patient needs. It complements the 'accommodation_code' field by providing a higher-level classification. It is often used for administrative and operational purposes.",
     "PHI/PII": false,
     "HIPAA": false
   },
   {
     "name": "hospital_service_type_code",
     "type": "STRING",
-    "description": "The \"hospital_service_type_code\" field identifies the specific type of service provided during the encounter, such as surgical, medical, or pediatric services. This code is essential for clinical documentation, billing, and resource management. It helps in understanding the nature of the services rendered and is used for categorizing encounters for reporting and analysis purposes.",
+    "description": "The 'hospital_service_type_code' field represents a coded value specifying the type of service provided during the encounter (e.g., cardiology, oncology). It uses a defined code system. This is crucial for billing and service tracking. It allows for standardized reporting and analysis of service utilization. It is often linked to organizational service catalogs. The code provides a consistent way to represent service types.",
     "PHI/PII": false,
     "HIPAA": false
   },
   {
     "name": "hospital_service_type_text",
     "type": "STRING",
-    "description": "The \"hospital_service_type_text\" field provides a textual description of the hospital service type associated with the encounter. This description complements the service type code by offering a human-readable explanation, which is useful for clinical staff, billing departments, and patients to understand the services provided. It enhances clarity and communication within healthcare documentation.",
+    "description": "The 'hospital_service_type_text' field provides a human-readable description of the hospital service type. This field complements the 'hospital_service_type_code' field. It is useful for displaying the service type in a user-friendly format. It can be used for reporting and analysis of service utilization. It provides additional context to the coded value. It is often used for administrative and operational purposes.",
     "PHI/PII": false,
     "HIPAA": false
   },
   {
     "name": "admit_source_code",
     "type": "STRING",
-    "description": "The \"admit_source_code\" field indicates the source from which the patient was admitted to the healthcare facility, such as a referral from a physician, transfer from another hospital, or emergency room admission. This information is vital for understanding patient flow, resource allocation, and for analyzing patterns in patient admissions. It also plays a role in determining the context of the encounter for billing and reporting.",
+    "description": "The 'admit_source_code' field represents a coded value specifying the source of the patient's admission (e.g., emergency room, physician referral). It uses a defined code system. This is important for understanding patient flow and referral patterns. It allows for standardized reporting and analysis of admission sources. It is often linked to organizational referral networks. The code provides a consistent way to represent admission sources.",
     "PHI/PII": false,
     "HIPAA": false
   },
@@ -146,217 +252,112 @@
       {
         "name": "code",
         "type": "STRING",
-        "description": "The \"code\" field within \"discharge_disposition\" represents a coded value that indicates the patient's status or destination upon discharge, such as home, another healthcare facility, or deceased. This code is crucial for continuity of care, discharge planning, and for understanding patient outcomes. It is also used in reporting and quality improvement initiatives.",
+        "description": "The 'discharge_disposition.code' field represents a coded value specifying the patient's destination upon discharge (e.g., home, skilled nursing facility). It uses a defined code system. This is crucial for understanding patient outcomes and transitions of care. It allows for standardized reporting and analysis of discharge destinations. It is often linked to post-acute care providers. The code provides a consistent way to represent discharge dispositions.",
         "PHI/PII": false,
         "HIPAA": false
       },
       {
         "name": "display",
         "type": "STRING",
-        "description": "The \"display\" field within \"discharge_disposition\" provides a human-readable description of the discharge disposition code. This description aids healthcare providers, patients, and administrative staff in understanding the patient's discharge status, facilitating communication and documentation. It complements the coded value by offering clarity and context.",
+        "description": "The 'discharge_disposition.display' field provides a human-readable description of the discharge disposition. This field complements the 'discharge_disposition.code' field. It is useful for displaying the disposition in a user-friendly format. It can be used for reporting and analysis of discharge patterns. It provides additional context to the coded value. It is often used for administrative and operational purposes.",
         "PHI/PII": false,
         "HIPAA": false
       }
     ],
-    "description": "The \"discharge_disposition\" field in a FHIR Encounter resource captures the patient's status or destination upon discharge. It includes both a coded value and a human-readable description, providing essential information for continuity of care, discharge planning, and understanding patient outcomes. This field is used in clinical documentation, reporting, and quality improvement efforts.",
+    "description": "The 'discharge_disposition' field represents the patient's destination upon discharge. It includes a code and a display value. This is crucial for understanding patient outcomes and transitions of care. It allows for standardized reporting and analysis of discharge destinations. It is often linked to post-acute care providers. The code provides a consistent way to represent discharge dispositions.",
     "PHI/PII": false,
     "HIPAA": false
   },
   {
     "name": "patient_id",
     "type": "STRING",
-    "description": "The \"patient_id\" field uniquely identifies the patient associated with the encounter. It is a critical element for linking the encounter to the patient's medical record, ensuring accurate documentation, and facilitating continuity of care. This identifier is essential for all aspects of healthcare delivery, including clinical care, billing, and reporting. It is considered PHI/PII as it can be used to identify an individual.",
+    "description": "The 'patient_id' field represents a unique identifier for the patient associated with the encounter. This is a core element for linking encounter data to the correct patient record. It is essential for data integrity and patient safety. It is used for tracking patient history and care coordination. It must be handled with strict security and privacy measures. It is a critical piece of Protected Health Information (PHI).",
     "PHI/PII": true,
     "HIPAA": true
   },
   {
     "name": "appointment_id",
     "type": "STRING",
-    "description": "The \"appointment_id\" field links the encounter to a specific appointment, providing context for the encounter's timing and purpose. This identifier is important for scheduling, resource management, and ensuring that the encounter aligns with the planned care. It helps in tracking patient visits and managing healthcare workflows efficiently.",
+    "description": "The 'appointment_id' field represents a unique identifier for the appointment associated with the encounter. This is used to link the encounter to a specific scheduled appointment. It is helpful for tracking appointment adherence and resource utilization. It can be used for scheduling and billing purposes. It may contain information about the patient and the provider. It is often used for administrative and operational purposes.",
     "PHI/PII": false,
     "HIPAA": false
   },
   {
     "name": "account_id",
     "type": "STRING",
-    "description": "The \"account_id\" field associates the encounter with a specific financial account, facilitating billing and financial management. This identifier is crucial for tracking charges, payments, and insurance claims related to the encounter. It ensures that all financial transactions are accurately linked to the correct encounter and patient account.",
+    "description": "The 'account_id' field represents a unique identifier for the patient's account associated with the encounter. This is used for billing and financial tracking purposes. It is essential for revenue cycle management. It may contain information about the patient's insurance coverage. It is often used for administrative and operational purposes. It is linked to the patient's financial record.",
     "PHI/PII": false,
     "HIPAA": false
   },
   {
     "name": "deceased_date_time",
     "type": "STRING",
-    "description": "The \"deceased_date_time\" field records the date and time of a patient's death, if applicable, during the encounter. This information is vital for clinical documentation, legal reporting, and for updating the patient's medical record. It is considered PHI/PII as it pertains to an individual's health status and is protected under HIPAA regulations.",
+    "description": "The 'deceased_date_time' field represents the date and time when the patient was declared deceased. This is a critical piece of information for patient records. It is used for various administrative and clinical purposes. It must be handled with sensitivity and respect. It is important for legal and ethical considerations. It is often used for reporting and analysis of mortality rates.",
     "PHI/PII": true,
     "HIPAA": true
   },
   {
     "name": "admission_date",
     "type": "STRING",
-    "description": "The \"admission_date\" field captures the date and time when the patient was admitted to the healthcare facility for the encounter. This information is crucial for determining the duration of the encounter, resource allocation, and for billing purposes. It is a key element in clinical documentation and operational management, providing a temporal context for the encounter.",
-    "PHI/PII": false,
-    "HIPAA": false
+    "description": "The 'admission_date' field represents the date when a patient was admitted for an encounter. It's crucial for tracking encounter start times, calculating length of stay, and billing. It's often linked to the Encounter.period.start in FHIR. Accuracy is vital for clinical and administrative purposes. This field is often derived from HL7 messages or other source systems.",
+    "PHI/PII": true,
+    "HIPAA": true
   },
   {
     "name": "discharge_date",
     "type": "STRING",
-    "description": "The \"discharge_date\" field represents the date and time when the patient was officially discharged from the encounter. It marks the end of the encounter and is crucial for determining its duration, billing, and clinical documentation. This field is used to analyze length of stay, identify potential delays, and improve patient flow. It is closely related to the period element of the Encounter resource.",
-    "PHI/PII": false,
-    "HIPAA": false
+    "description": "The 'discharge_date' field indicates the date when a patient was discharged from an encounter. It's essential for determining encounter duration, billing, and resource utilization. It corresponds to Encounter.period.end in FHIR. Accurate discharge dates are critical for data quality and analysis. This field is often derived from HL7 messages or other source systems.",
+    "PHI/PII": true,
+    "HIPAA": true
   },
   {
     "name": "is_valid_date_ind",
     "type": "BOOLEAN",
-    "description": "The \"is_valid_date_ind\" field is a boolean indicator that verifies the validity of the dates associated with the encounter, such as admission and discharge dates. This field is important for ensuring data integrity and accuracy in clinical documentation, billing, and reporting. It helps identify and correct potential errors in date entries, supporting reliable healthcare data management.",
+    "description": "The 'is_valid_date_ind' field is a boolean flag indicating whether the associated date fields (e.g., admission_date, discharge_date) contain valid and reasonable date values. It's used for data quality checks and to identify potential data errors or inconsistencies. A value of 'true' suggests the date is valid, while 'false' indicates a potential issue.",
     "PHI/PII": false,
     "HIPAA": false
   },
   {
     "name": "alt_admission_date_time",
     "type": "STRING",
-    "description": "The \"alt_admission_date_time\" field provides an alternative date and time for the patient's admission, which may be used in cases where the primary admission date is unavailable or requires verification. This field ensures flexibility and accuracy in documenting the encounter's start time, supporting clinical care, billing, and operational management.",
-    "PHI/PII": false,
-    "HIPAA": false
+    "description": "The 'alt_admission_date_time' field provides an alternative representation of the admission date and time, potentially from a different source system or in a different format than the primary 'admission_date' field. It serves as a backup or secondary source of admission information, useful for reconciliation and data validation. It may contain date and time with timezone information.",
+    "PHI/PII": true,
+    "HIPAA": true
   },
   {
     "name": "hl7_admission_date_time",
     "type": "STRING",
-    "description": "The \"hl7_admission_date_time\" field records the admission date and time in the HL7 format, ensuring interoperability and standardization across healthcare systems. This field is crucial for data exchange, enabling seamless communication and integration of patient information between different healthcare providers and systems. It supports accurate and efficient healthcare delivery.",
-    "PHI/PII": false,
-    "HIPAA": false
-  },
-  {
-    "name": "encounter_id",
-    "type": "STRING",
-    "description": "The \"encounter_id\" field uniquely identifies an encounter within a healthcare system. It is a critical identifier used to track and manage patient interactions with healthcare providers. This ID is essential for linking various clinical and administrative data related to the encounter, ensuring continuity of care and accurate record-keeping. It is used in billing, reporting, and clinical documentation processes.",
-    "PHI/PII": true,
-    "HIPAA": true
-  },
-  {
-    "name": "lastupdated",
-    "type": "TIMESTAMP",
-    "description": "The \"lastupdated\" field indicates the most recent date and time when the encounter record was modified. This timestamp is crucial for maintaining data integrity and ensuring that the most current information is available for clinical decision-making, reporting, and auditing purposes. It helps track changes over time and supports version control in healthcare data management.",
-    "PHI/PII": false,
-    "HIPAA": false
-  },
-  {
-    "name": "hl7_message_date_time",
-    "type": "DATETIME",
-    "description": "The \"hl7_message_date_time\" field captures the date and time when the HL7 message related to the encounter was generated. This timestamp is vital for understanding the sequence of events in patient care and ensuring timely communication between healthcare systems. It aids in the synchronization of data across different platforms and supports accurate clinical documentation.",
-    "PHI/PII": false,
-    "HIPAA": false
-  },
-  {
-    "name": "hl7_message_date_time_UTC",
-    "type": "DATETIME",
-    "description": "The \"hl7_message_date_time_UTC\" field represents the date and time of the HL7 message in Coordinated Universal Time (UTC). This standardization is crucial for interoperability across different time zones, ensuring consistent and accurate data exchange between healthcare systems globally. It helps prevent discrepancies in time-sensitive clinical information.",
-    "PHI/PII": false,
-    "HIPAA": false
-  },
-  {
-    "name": "hl7_message_control_id",
-    "type": "STRING",
-    "description": "The \"hl7_message_control_id\" field is a unique identifier for an HL7 message, used to track and manage message exchanges between healthcare systems. This ID is essential for ensuring message integrity, preventing duplication, and facilitating error handling in data transmission. It plays a critical role in maintaining reliable communication in healthcare interoperability.",
-    "PHI/PII": false,
-    "HIPAA": false
-  },
-  {
-    "name": "meta_latest_source_date_time",
-    "type": "DATETIME",
-    "description": "The \"meta_latest_source_date_time\" field indicates the most recent date and time when the source data for the encounter was updated. This timestamp is important for data provenance, ensuring that the information used in clinical decision-making is current and accurate. It supports auditing and compliance with data governance standards.",
-    "PHI/PII": false,
-    "HIPAA": false
-  },
-  {
-    "name": "intermediate_snapshot_creation_date_time",
-    "type": "DATETIME",
-    "description": "The \"intermediate_snapshot_creation_date_time\" field records the date and time when an intermediate snapshot of the encounter data was created. This snapshot is used for data backup, recovery, and analysis purposes, ensuring that a consistent state of the data is preserved at a specific point in time. It supports data integrity and reliability in healthcare systems.",
-    "PHI/PII": false,
-    "HIPAA": false
-  },
-  {
-    "name": "final_fhir_write_date_time",
-    "type": "DATETIME",
-    "description": "The \"final_fhir_write_date_time\" field captures the date and time when the encounter data was last written to the FHIR server. This timestamp is crucial for ensuring that the most recent and accurate data is available for clinical use, reporting, and interoperability. It supports data synchronization and consistency across healthcare systems.",
-    "PHI/PII": false,
-    "HIPAA": false
-  },
-  {
-    "name": "final_fhir_commit_date_time",
-    "type": "DATETIME",
-    "description": "The \"final_fhir_commit_date_time\" field indicates the date and time when the encounter data was committed to the FHIR server. This timestamp is important for ensuring data integrity and consistency, confirming that the data has been successfully stored and is available for use in clinical and administrative processes.",
-    "PHI/PII": false,
-    "HIPAA": false
-  },
-  {
-    "name": "encounter_version_id",
-    "type": "STRING",
-    "description": "The \"encounter_version_id\" field represents a unique identifier for a specific version of the encounter record. This ID is essential for version control, allowing healthcare systems to track changes and updates to the encounter data over time. It supports data integrity, auditing, and compliance with healthcare data management standards.",
-    "PHI/PII": false,
-    "HIPAA": false
-  },
-  {
-    "name": "version_id_fingerprint",
-    "type": "INTEGER",
-    "description": "The \"version_id_fingerprint\" field is a numeric representation of the encounter version's unique characteristics. This fingerprint is used to ensure data integrity and detect changes or discrepancies in the encounter record. It supports version control and auditing processes in healthcare data management.",
-    "PHI/PII": false,
-    "HIPAA": false
-  },
-  {
-    "name": "consent_coid",
-    "type": "STRING",
-    "description": "The \"consent_coid\" field represents a unique identifier for a patient's consent related to the encounter. This ID is crucial for managing patient consent preferences, ensuring compliance with legal and ethical standards for data sharing and privacy. It supports informed consent processes and protects patient rights in healthcare interactions.",
-    "PHI/PII": true,
-    "HIPAA": true
-  },
-  {
-    "name": "meta_action_code",
-    "type": "STRING",
-    "description": "The \"meta_action_code\" field indicates the type of action performed on the encounter record, such as creation, update, or deletion. This code is important for tracking data lifecycle events, supporting auditing, and ensuring compliance with data governance policies in healthcare systems.",
-    "PHI/PII": false,
-    "HIPAA": false
-  },
-  {
-    "name": "hl7_v2_source_interface",
-    "type": "STRING",
-    "description": "The \"hl7_v2_source_interface\" field identifies the source interface from which the HL7 v2 message originated. This information is crucial for understanding the data flow and integration points within healthcare systems, supporting interoperability and ensuring accurate data exchange between different platforms.",
-    "PHI/PII": false,
-    "HIPAA": false
-  },
-  {
-    "name": "patient_account_num",
-    "type": "STRING",
-    "description": "The \"patient_account_num\" field is a unique identifier for a patient's account within the healthcare system. This number is essential for managing billing, insurance claims, and financial transactions related to the patient's care. It supports accurate record-keeping and ensures that financial and administrative processes are linked to the correct patient.",
+    "description": "The 'hl7_admission_date_time' field stores the admission date and time as received directly from an HL7 message. This field preserves the original HL7 representation of the admission date, which is valuable for auditing, troubleshooting, and ensuring data integrity during the ETL process. It often includes timezone information.",
     "PHI/PII": true,
     "HIPAA": true
   },
   {
     "name": "alt_discharge_date_time",
     "type": "STRING",
-    "description": "The 'alt_discharge_date_time' field represents an alternative date and time when the patient was discharged from the encounter. This field may be used in cases where there are multiple discharge times recorded due to different systems or updates. It is crucial for ensuring accurate documentation and reconciliation of patient discharge information across various healthcare systems. This field is typically represented as a string in the format of a date-time with time zone information.",
+    "description": "The 'alt_discharge_date_time' field provides an alternative representation of the discharge date and time, possibly from a different source or in a different format. It acts as a secondary source of discharge information, useful for data reconciliation and validation. It may contain date and time with timezone information.",
     "PHI/PII": true,
     "HIPAA": true
   },
   {
     "name": "hl7_discharge_date_time",
     "type": "STRING",
-    "description": "The 'hl7_discharge_date_time' field captures the discharge date and time as per HL7 standards. This field is essential for interoperability, ensuring that discharge information is consistently communicated across different healthcare systems. It is typically formatted as a string representing a date-time with time zone, facilitating accurate data exchange and integration.",
+    "description": "The 'hl7_discharge_date_time' field stores the discharge date and time as received directly from an HL7 message. This preserves the original HL7 representation, which is valuable for auditing, troubleshooting, and ensuring data integrity. It often includes timezone information.",
     "PHI/PII": true,
     "HIPAA": true
   },
   {
     "name": "reason_for_visit_text",
     "type": "STRING",
-    "description": "The 'reason_for_visit_text' field provides a textual description of the patient's reason for visiting the healthcare facility. This information is crucial for clinical documentation, patient care planning, and billing purposes. It helps healthcare providers understand the patient's presenting complaints or conditions, facilitating appropriate triage and treatment decisions.",
+    "description": "The 'reason_for_visit_text' field contains a textual description of the patient's reason for the encounter. This field provides valuable context for the encounter and can be used for clinical documentation, billing, and reporting. It's often free-text and may require natural language processing for analysis.",
     "PHI/PII": true,
     "HIPAA": true
   },
   {
     "name": "mt_reason_for_visit_code",
     "type": "STRING",
-    "description": "The 'mt_reason_for_visit_code' field contains a coded representation of the patient's reason for visit. This code is used for standardized documentation and interoperability, allowing for consistent data exchange across healthcare systems. It supports clinical decision-making, reporting, and analytics by providing a structured way to capture the patient's presenting issues.",
-    "PHI/PII": false,
-    "HIPAA": false
+    "description": "The 'mt_reason_for_visit_code' field represents a coded value for the patient's reason for the encounter, using a standardized medical terminology (e.g., ICD-10, SNOMED CT). This field provides a structured and consistent way to represent the reason for visit, enabling data analysis and interoperability.",
+    "PHI/PII": true,
+    "HIPAA": true
   },
   {
     "name": "patient_location",
@@ -366,25 +367,28 @@
       {
         "name": "location_id",
         "type": "STRING",
-        "description": "The 'location_id' field uniquely identifies a specific location within the healthcare facility where the patient is situated during the encounter. This identifier is crucial for tracking patient movement, resource allocation, and ensuring the correct delivery of care. It supports operational efficiency and patient safety by providing precise location information.",
+        "description": "The 'location_id' field within the 'patient_location' record specifies the unique identifier of the location where the patient was during the encounter. This ID links to a location resource and is crucial for tracking patient movement and resource utilization.",
         "PHI/PII": true,
         "HIPAA": true
       },
       {
         "name": "mnemonic",
         "type": "STRING",
-        "description": "The 'mnemonic' field provides a shorthand or abbreviated representation of the patient location. This field is used for quick reference and communication among healthcare staff, facilitating efficient navigation and coordination within the facility. It enhances workflow by providing an easily recognizable identifier for locations.",
+        "description": "The 'mnemonic' field within the 'patient_location' record provides a short, human-readable code or abbreviation for the location (e.g., 'ER', 'ICU'). This mnemonic aids in quick identification and understanding of the patient's location within the healthcare facility.",
         "PHI/PII": false,
         "HIPAA": false
       },
       {
         "name": "physical_type",
         "type": "STRING",
-        "description": "The 'physical_type' field describes the type of physical location where the patient is situated, such as a room, ward, or department. This information is important for understanding the context of care, resource allocation, and facility management. It aids in operational planning and patient flow optimization.",
+        "description": "The 'physical_type' field within the 'patient_location' record describes the type of physical space the location represents (e.g., 'ward', 'room', 'bed'). This helps categorize and classify different locations within the healthcare facility for analysis and reporting.",
         "PHI/PII": false,
         "HIPAA": false
       }
-    ]
+    ],
+    "description": "The 'patient_location' field is a repeated record containing information about the patient's location during the encounter. It includes details like location ID, mnemonic, and physical type, providing a history of the patient's movements within the healthcare facility.",
+    "PHI/PII": true,
+    "HIPAA": true
   },
   {
     "name": "emergency_department",
@@ -393,63 +397,63 @@
       {
         "name": "edm_arrived_date_time",
         "type": "STRING",
-        "description": "The 'edm_arrived_date_time' field records the date and time when the patient arrived at the emergency department. This timestamp is critical for triage, resource allocation, and performance metrics such as wait times. It helps in assessing the timeliness of care and identifying potential bottlenecks in patient flow.",
+        "description": "The date and time when the patient arrived at the emergency department. This is a key timestamp for tracking patient flow and ED utilization. PHI/PII: True. HIPAA: True",
         "PHI/PII": true,
         "HIPAA": true
       },
       {
         "name": "edm_triaged_date_time",
         "type": "STRING",
-        "description": "The 'edm_triaged_date_time' field captures the date and time when the patient was triaged in the emergency department. This information is vital for understanding the sequence of care, prioritizing treatment, and evaluating the efficiency of the triage process. It supports clinical decision-making and operational management.",
+        "description": "The date and time when the patient was triaged in the emergency department. This timestamp is crucial for assessing triage efficiency and patient wait times. PHI/PII: True. HIPAA: True",
         "PHI/PII": true,
         "HIPAA": true
       },
       {
         "name": "edm_departure_date_time",
         "type": "STRING",
-        "description": "The 'edm_departure_date_time' field indicates the date and time when the patient departed from the emergency department. This field is essential for calculating the length of stay, analyzing patient flow, and ensuring accurate documentation of the encounter's conclusion. It aids in operational planning and quality improvement initiatives.",
+        "description": "The date and time when the patient departed from the emergency department. This marks the end of the ED encounter. PHI/PII: True. HIPAA: True",
         "PHI/PII": true,
         "HIPAA": true
       },
       {
         "name": "coid",
         "type": "STRING",
-        "description": "The 'coid' field represents a unique identifier associated with the emergency department encounter. This identifier is crucial for tracking and managing patient records, ensuring data integrity, and facilitating interoperability across healthcare systems. It supports accurate documentation and retrieval of encounter information.",
-        "PHI/PII": true,
-        "HIPAA": true
+        "description": "A code identifying the organization or entity associated with the encounter. This is often an internal identifier. PHI/PII: False. HIPAA: False",
+        "PHI/PII": false,
+        "HIPAA": false
       },
       {
         "name": "priority_rank",
         "type": "STRING",
-        "description": "The 'priority_rank' field indicates the assigned priority level for the patient's treatment in the emergency department. This ranking is used to determine the order of care based on the severity of the patient's condition, ensuring that critical cases receive timely attention. It supports triage and resource allocation decisions.",
+        "description": "The rank or order of priority assigned to the patient during triage. This reflects the urgency of the patient's condition. PHI/PII: False. HIPAA: False",
         "PHI/PII": false,
         "HIPAA": false
       },
       {
         "name": "priority_code",
         "type": "STRING",
-        "description": "The 'priority_code' field provides a coded representation of the patient's priority level in the emergency department. This code is used for standardized documentation and communication, facilitating consistent triage and treatment prioritization across healthcare providers. It supports clinical decision-making and operational efficiency.",
+        "description": "A code representing the priority level assigned to the patient. This is often a standardized coding system. PHI/PII: False. HIPAA: False",
         "PHI/PII": false,
         "HIPAA": false
       },
       {
         "name": "priority_text",
         "type": "STRING",
-        "description": "The 'priority_text' field offers a textual description of the patient's priority level in the emergency department. This information is used to communicate the urgency of the patient's condition to healthcare staff, ensuring appropriate and timely care delivery. It aids in clinical documentation and coordination of care.",
+        "description": "A textual description of the priority level assigned to the patient. This provides a human-readable explanation of the priority code. PHI/PII: False. HIPAA: False",
         "PHI/PII": false,
         "HIPAA": false
       },
       {
         "name": "edm_reason_for_visit_code",
         "type": "STRING",
-        "description": "The 'edm_reason_for_visit_code' field contains a coded representation of the patient's reason for visiting the emergency department. This code is used for standardized documentation and interoperability, allowing for consistent data exchange and analysis across healthcare systems. It supports clinical decision-making and reporting.",
-        "PHI/PII": false,
-        "HIPAA": false
+        "description": "A code representing the patient's reason for visiting the emergency department. This is often a standardized coding system like ICD or SNOMED. PHI/PII: True. HIPAA: True",
+        "PHI/PII": true,
+        "HIPAA": true
       },
       {
         "name": "edm_reason_for_visit_text",
         "type": "STRING",
-        "description": "The 'edm_reason_for_visit_text' field provides a textual description of the patient's reason for visiting the emergency department. This information is crucial for clinical documentation, patient care planning, and billing purposes. It helps healthcare providers understand the patient's presenting complaints or conditions, facilitating appropriate triage and treatment decisions.",
+        "description": "A textual description of the patient's reason for visiting the emergency department. This provides a human-readable explanation of the reason for visit. PHI/PII: True. HIPAA: True",
         "PHI/PII": true,
         "HIPAA": true
       },
@@ -460,49 +464,49 @@
           {
             "name": "departure_disposition_code",
             "type": "STRING",
-            "description": "The 'departure_disposition_code' field contains a coded representation of the patient's disposition upon departure from the emergency department. This code is used for standardized documentation and communication, facilitating consistent data exchange and analysis across healthcare systems. It supports clinical decision-making and reporting.",
-            "PHI/PII": false,
-            "HIPAA": false
+            "description": "A code representing the patient's disposition upon departure from the emergency department (e.g., discharged, admitted). PHI/PII: True. HIPAA: True",
+            "PHI/PII": true,
+            "HIPAA": true
           },
           {
             "name": "departure_disposition_text",
             "type": "STRING",
-            "description": "The 'departure_disposition_text' field provides a textual description of the patient's disposition upon departure from the emergency department. This information is crucial for clinical documentation, patient care planning, and billing purposes. It helps healthcare providers understand the outcome of the encounter and any follow-up actions required.",
+            "description": "A textual description of the patient's disposition upon departure. PHI/PII: True. HIPAA: True",
             "PHI/PII": true,
             "HIPAA": true
           },
           {
             "name": "departure_disposition_display",
             "type": "STRING",
-            "description": "The 'departure_disposition_display' field offers a display-friendly version of the patient's disposition upon departure from the emergency department. This field is used for user interfaces and reports, providing a clear and understandable representation of the patient's outcome. It supports communication and documentation.",
-            "PHI/PII": false,
-            "HIPAA": false
+            "description": "A displayable version of the patient's disposition upon departure. PHI/PII: True. HIPAA: True",
+            "PHI/PII": true,
+            "HIPAA": true
           },
           {
             "name": "departure_condition_code",
             "type": "STRING",
-            "description": "The 'departure_condition_code' field contains a coded representation of the patient's condition upon departure from the emergency department. This code is used for standardized documentation and communication, facilitating consistent data exchange and analysis across healthcare systems. It supports clinical decision-making and reporting.",
-            "PHI/PII": false,
-            "HIPAA": false
+            "description": "A code representing the patient's condition upon departure from the emergency department. PHI/PII: True. HIPAA: True",
+            "PHI/PII": true,
+            "HIPAA": true
           },
           {
             "name": "departure_condition_text",
             "type": "STRING",
-            "description": "The 'departure_condition_text' field provides a textual description of the patient's condition upon departure from the emergency department. This information is crucial for clinical documentation, patient care planning, and billing purposes. It helps healthcare providers understand the patient's status at the end of the encounter.",
+            "description": "A textual description of the patient's condition upon departure. PHI/PII: True. HIPAA: True",
             "PHI/PII": true,
             "HIPAA": true
           },
           {
             "name": "departure_condition_display",
             "type": "STRING",
-            "description": "The 'departure_condition_display' field offers a display-friendly version of the patient's condition upon departure from the emergency department. This field is used for user interfaces and reports, providing a clear and understandable representation of the patient's status. It supports communication and documentation.",
-            "PHI/PII": false,
-            "HIPAA": false
+            "description": "A displayable version of the patient's condition upon departure. PHI/PII: True. HIPAA: True",
+            "PHI/PII": true,
+            "HIPAA": true
           },
           {
             "name": "departure_comments",
             "type": "STRING",
-            "description": "The 'departure_comments' field allows for additional comments or notes regarding the patient's departure from the emergency department. This field is used for capturing any relevant information that may not be covered by structured data fields, providing context and insights into the patient's encounter and outcome.",
+            "description": "Any comments or notes related to the patient's departure from the emergency department. PHI/PII: True. HIPAA: True",
             "PHI/PII": true,
             "HIPAA": true
           }
@@ -519,14 +523,14 @@
               {
                 "name": "room_code",
                 "type": "STRING",
-                "description": "The 'room_code' field uniquely identifies a specific treatment room within the emergency department. This code is crucial for tracking patient location, resource allocation, and ensuring the correct delivery of care. It supports operational efficiency and patient safety by providing precise location information.",
-                "PHI/PII": true,
-                "HIPAA": true
+                "description": "A code representing the treatment room where the patient was located. PHI/PII: False. HIPAA: False",
+                "PHI/PII": false,
+                "HIPAA": false
               },
               {
                 "name": "room_text",
                 "type": "STRING",
-                "description": "The 'room_text' field provides a textual description of the treatment room within the emergency department. This information is used for communication and documentation, helping healthcare staff identify and navigate to the correct location for patient care.",
+                "description": "A textual description of the treatment room. PHI/PII: False. HIPAA: False",
                 "PHI/PII": false,
                 "HIPAA": false
               }
@@ -539,14 +543,14 @@
               {
                 "name": "location_code",
                 "type": "STRING",
-                "description": "The 'location_code' field uniquely identifies a specific location within the emergency department. This code is crucial for tracking patient movement, resource allocation, and ensuring the correct delivery of care. It supports operational efficiency and patient safety by providing precise location information.",
-                "PHI/PII": true,
-                "HIPAA": true
+                "description": "A code representing the patient's location within the emergency department. PHI/PII: False. HIPAA: False",
+                "PHI/PII": false,
+                "HIPAA": false
               },
               {
                 "name": "location_text",
                 "type": "STRING",
-                "description": "The 'location_text' field provides a textual description of a location within the emergency department. This information is used for communication and documentation, helping healthcare staff identify and navigate to the correct location for patient care.",
+                "description": "A textual description of the patient's location within the emergency department. PHI/PII: False. HIPAA: False",
                 "PHI/PII": false,
                 "HIPAA": false
               }
@@ -559,14 +563,14 @@
               {
                 "name": "room_code",
                 "type": "STRING",
-                "description": "The 'room_code' field uniquely identifies a reserved room within the emergency department. This code is crucial for tracking patient location, resource allocation, and ensuring the correct delivery of care. It supports operational efficiency and patient safety by providing precise location information.",
-                "PHI/PII": true,
-                "HIPAA": true
+                "description": "A code representing the room that was reserved for the patient. PHI/PII: False. HIPAA: False",
+                "PHI/PII": false,
+                "HIPAA": false
               },
               {
                 "name": "room_text",
                 "type": "STRING",
-                "description": "The 'room_text' field provides a textual description of a reserved room within the emergency department. This information is used for communication and documentation, helping healthcare staff identify and navigate to the correct location for patient care.",
+                "description": "A textual description of the room that was reserved for the patient. PHI/PII: False. HIPAA: False",
                 "PHI/PII": false,
                 "HIPAA": false
               }
@@ -581,35 +585,35 @@
           {
             "name": "transport_company_code",
             "type": "STRING",
-            "description": "The 'transport_company_code' field contains a coded representation of the transport company involved in the patient's transfer to or from the emergency department. This code is used for standardized documentation and communication, facilitating consistent data exchange and analysis across healthcare systems.",
+            "description": "A code representing the transport company used for the patient. PHI/PII: False. HIPAA: False",
             "PHI/PII": false,
             "HIPAA": false
           },
           {
             "name": "transport_company_display",
             "type": "STRING",
-            "description": "The 'transport_company_display' field offers a display-friendly version of the transport company involved in the patient's transfer. This field is used for user interfaces and reports, providing a clear and understandable representation of the transport provider.",
+            "description": "A displayable name of the transport company. PHI/PII: False. HIPAA: False",
             "PHI/PII": false,
             "HIPAA": false
           },
           {
             "name": "transport_id_code",
             "type": "STRING",
-            "description": "The 'transport_id_code' field contains a coded representation of the transport identifier used for the patient's transfer. This code is crucial for tracking and managing transport logistics, ensuring accurate documentation and coordination of patient transfers.",
+            "description": "A code identifying the specific transport vehicle or personnel. PHI/PII: False. HIPAA: False",
             "PHI/PII": false,
             "HIPAA": false
           },
           {
             "name": "transport_id_display",
             "type": "STRING",
-            "description": "The 'transport_id_display' field offers a display-friendly version of the transport identifier used for the patient's transfer. This field is used for user interfaces and reports, providing a clear and understandable representation of the transport details.",
+            "description": "A displayable identifier for the transport. PHI/PII: False. HIPAA: False",
             "PHI/PII": false,
             "HIPAA": false
           },
           {
             "name": "transport_call_date_time",
             "type": "STRING",
-            "description": "The 'transport_call_date_time' field records the date and time when the transport was called for the patient's transfer. This timestamp is critical for coordinating transport logistics, ensuring timely patient transfers, and evaluating the efficiency of transport services.",
+            "description": "The date and time when the transport was called. PHI/PII: True. HIPAA: True",
             "PHI/PII": true,
             "HIPAA": true
           }
@@ -625,21 +629,21 @@
       {
         "name": "mnemonic",
         "type": "STRING",
-        "description": "The 'mnemonic' field provides a shorthand or abbreviated representation of a registration query. This field is used for quick reference and communication among healthcare staff, facilitating efficient navigation and coordination during the registration process.",
+        "description": "A short code or abbreviation representing a question asked during registration. PHI/PII: False. HIPAA: False",
         "PHI/PII": false,
         "HIPAA": false
       },
       {
         "name": "question",
         "type": "STRING",
-        "description": "The 'question' field contains the text of a query posed during the patient registration process. This information is crucial for gathering necessary patient details, ensuring accurate documentation, and facilitating appropriate care delivery.",
-        "PHI/PII": false,
-        "HIPAA": false
+        "description": "The text of the question asked during registration. PHI/PII: True. HIPAA: True",
+        "PHI/PII": true,
+        "HIPAA": true
       },
       {
         "name": "response",
         "type": "STRING",
-        "description": "The 'response' field captures the patient's answer to a registration query. This information is essential for completing the registration process, ensuring accurate documentation, and facilitating appropriate care delivery.",
+        "description": "The patient's response to the question asked during registration. PHI/PII: True. HIPAA: True",
         "PHI/PII": true,
         "HIPAA": true
       }
@@ -648,7 +652,7 @@
   {
     "name": "insert_timestamp",
     "type": "TIMESTAMP",
-    "description": "The 'insert_timestamp' field records the date and time when the encounter data was inserted into the system. This timestamp is crucial for data integrity, audit trails, and ensuring the timeliness of information. It supports data management and compliance with regulatory requirements.",
+    "description": "The timestamp when the record was inserted into the database. PHI/PII: False. HIPAA: False",
     "PHI/PII": false,
     "HIPAA": false
   }
