@@ -8,10 +8,10 @@ app:
 # GCP Configuration
 bigquery:
   project_id: 'hca-sandbox'
-  dataset_id: 'hca_metadata_pot'
+  dataset_id: 'LLM_Test'
   table_id: 'fhir_encounters'
   location: 'us'
-  mode: "alter"
+  mode: "create"
 
 # Logging configuration
 logging:
@@ -20,9 +20,9 @@ logging:
 
 # File paths
 files:
-  input_schema: "fhir/encounters_table_schema.json"
-  output_schema: "fhir/schema_with_descriptions.json"
-  sql_output: "sql/alter_table.sql"
+  input_schema: "fhir/hde_encounters.json"
+  output_schema: "fhir/hde_encounters_enriched.json"
+  sql_output: "sql/create_table.sql"
 
 llm:
-  model: "gemini-1.5-pro"
+  model: "gpt-4o"

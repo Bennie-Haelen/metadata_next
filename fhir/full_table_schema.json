@@ -1,0 +1,451 @@
+[
+    {
+      "name": "encounter_id",
+      "type": "STRING",      
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "lastupdated",
+      "type": "TIMESTAMP",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "hl7_message_date_time",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "hl7_message_date_time_UTC",
+      "type": "TIMESTAMP",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "hl7_message_control_id",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "meta_latest_source_date_time",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "intermediate_snapshot_creation_date_time",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "final_fhir_write_date_time",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "final_fhir_commit_date_time",
+      "type": "TIMESTAMP",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "encounter_version_id",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "version_id_fingerprint",
+      "type": "INTEGER",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "consent_coid",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "meta_action_code",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "hl7_v2_source_interface",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "patient_account_num",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "patient_primary_id",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "network_mnemonic",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "medical_record_num",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "coid",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "facility_mnemonic",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "fhir_visit_status",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "fhir_patient_class_code",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "fhir_patient_class_display",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "patient_type",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "admission_type",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "patient_class_code",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "account_status_code",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "vip_indicator_code",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "financial_class_code",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "mode_of_arrival_code",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "accommodation_code",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "accommodation_code_category",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "hospital_service_type_code",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "hospital_service_type_text",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "admit_source_code",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "discharge_disposition",
+      "type": "RECORD",
+      "mode": "REPEATED",
+      "fields": [
+        {
+          "name": "code",
+          "type": "STRING"
+        },
+        {
+          "name": "display",
+          "type": "STRING"
+        }
+      ]
+    },
+    {
+      "name": "patient_id",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "appointment_id",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "account_id",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "deceased_date_time",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "admission_date",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "discharge_date",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "is_valid_date_ind",
+      "type": "BOOLEAN",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "alt_admission_date_time",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "hl7_admission_date_time",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "alt_discharge_date_time",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "hl7_discharge_date_time",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "reason_for_visit_text",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "mt_reason_for_visit_code",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "patient_location",
+      "type": "RECORD",
+      "mode": "REPEATED",
+      "fields": [
+        {
+          "name": "location_id",
+          "type": "STRING"
+        },
+        {
+          "name": "mnemonic",
+          "type": "STRING"
+        },
+        {
+          "name": "physical_type",
+          "type": "STRING"
+        }
+      ]
+    },
+    {
+      "name": "emergency_department",
+      "type": "RECORD",
+      "fields": [
+        {
+          "name": "edm_arrived_date_time",
+          "type": "STRING"
+        },
+        {
+          "name": "edm_triaged_date_time",
+          "type": "STRING"
+        },
+        {
+          "name": "edm_departure_date_time",
+          "type": "STRING"
+        },
+        {
+          "name": "coid",
+          "type": "STRING"
+        },
+        {
+          "name": "priority_rank",
+          "type": "STRING"
+        },
+        {
+          "name": "priority_code",
+          "type": "STRING"
+        },
+        {
+          "name": "priority_text",
+          "type": "STRING"
+        },
+        {
+          "name": "edm_reason_for_visit_code",
+          "type": "STRING"
+        },
+        {
+          "name": "edm_reason_for_visit_text",
+          "type": "STRING"
+        },
+        {
+          "name": "departure_info",
+          "type": "RECORD",
+          "fields": [
+            {
+              "name": "departure_disposition_code",
+              "type": "STRING"
+            },
+            {
+              "name": "departure_disposition_text",
+              "type": "STRING"
+            },
+            {
+              "name": "departure_disposition_display",
+              "type": "STRING"
+            },
+            {
+              "name": "departure_condition_code",
+              "type": "STRING"
+            },
+            {
+              "name": "departure_condition_text",
+              "type": "STRING"
+            },
+            {
+              "name": "departure_condition_display",
+              "type": "STRING"
+            },
+            {
+              "name": "departure_comments",
+              "type": "STRING"
+            }
+          ]
+        },
+        {
+          "name": "patient_location",
+          "type": "RECORD",
+          "fields": [
+            {
+              "name": "treatment_room",
+              "type": "RECORD",
+              "fields": [
+                {
+                  "name": "room_code",
+                  "type": "STRING"
+                },
+                {
+                  "name": "room_text",
+                  "type": "STRING"
+                }
+              ]
+            },
+            {
+              "name": "edm_location",
+              "type": "RECORD",
+              "fields": [
+                {
+                  "name": "location_code",
+                  "type": "STRING"
+                },
+                {
+                  "name": "location_text",
+                  "type": "STRING"
+                }
+              ]
+            },
+            {
+              "name": "reserved_room",
+              "type": "RECORD",
+              "fields": [
+                {
+                  "name": "room_code",
+                  "type": "STRING"
+                },
+                {
+                  "name": "room_text",
+                  "type": "STRING"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "edm_transport",
+          "type": "RECORD",
+          "fields": [
+            {
+              "name": "transport_company_code",
+              "type": "STRING"
+            },
+            {
+              "name": "transport_company_display",
+              "type": "STRING"
+            },
+            {
+              "name": "transport_id_code",
+              "type": "STRING"
+            },
+            {
+              "name": "transport_id_display",
+              "type": "STRING"
+            },
+            {
+              "name": "transport_call_date_time",
+              "type": "STRING"
+            }
+          ]
+        }
+      ],
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "registration_query",
+      "type": "RECORD",
+      "mode": "REPEATED",
+      "fields": [
+        {
+          "name": "mnemonic",
+          "type": "STRING"
+        },
+        {
+          "name": "question",
+          "type": "STRING"
+        },
+        {
+          "name": "response",
+          "type": "STRING"
+        }
+      ]
+    },
+    {
+      "name": "insert_timestamp",
+      "type": "TIMESTAMP",
+      "mode": "NULLABLE"
+    }
+  ]

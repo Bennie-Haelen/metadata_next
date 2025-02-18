@@ -1,0 +1,733 @@
+[
+  {
+    "name": "encounter_id",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "The unique identifier for the encounter.  This is essential for referencing and retrieving specific encounter records within a system.",
+    "PHI/PII": true,
+    "HIPAA": true
+  },
+  {
+    "name": "lastupdated",
+    "type": "TIMESTAMP",
+    "mode": "NULLABLE",
+    "description": "Indicates the last time the encounter record was updated. Useful for tracking changes and data provenance.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "hl7_message_date_time",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "The date and time the original HL7 message was created.  Provides context for the encounter data's origin.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "hl7_message_date_time_UTC",
+    "type": "TIMESTAMP",
+    "mode": "NULLABLE",
+    "description": "The UTC timestamp of the original HL7 message creation.  Important for consistent time representation across systems.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "hl7_message_control_id",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "The control ID from the HL7 message. Used for message tracking and correlation.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "meta_latest_source_date_time",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "The latest date/time the encounter data was sourced.  Helps track data freshness and updates.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "intermediate_snapshot_creation_date_time",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Timestamp indicating when an intermediate snapshot of the encounter data was created.  Relevant for data warehousing and history tracking.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "final_fhir_write_date_time",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "The date and time the encounter data was finally written to the FHIR repository.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "final_fhir_commit_date_time",
+    "type": "TIMESTAMP",
+    "mode": "NULLABLE",
+    "description": "The timestamp of the final commit of the encounter data to the FHIR server. Marks the completion of the data persistence process.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "encounter_version_id",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "A specific version identifier for the encounter record.  Allows tracking of different versions and revisions of the encounter data.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "version_id_fingerprint",
+    "type": "INTEGER",
+    "mode": "NULLABLE",
+    "description": "A numeric fingerprint representing the version ID.  Used for data integrity checks and version comparison.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "consent_coid",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "An identifier related to patient consent.  Important for managing patient privacy and data access permissions.",
+    "PHI/PII": true,
+    "HIPAA": true
+  },
+  {
+    "name": "meta_action_code",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "A code indicating the action performed on the encounter data (e.g., create, update, delete).  Useful for auditing and change tracking.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "hl7_v2_source_interface",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Identifies the specific HL7 v2 interface from which the encounter data originated.  Helps in understanding the data source and potential integration points.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "patient_account_num",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "The patient's account number within the healthcare system. Used for billing and administrative purposes.",
+    "PHI/PII": true,
+    "HIPAA": true
+  },
+  {
+    "name": "patient_primary_id",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "The patient's primary identifier.  This is a key field linking the encounter to the specific patient.  It should be a stable, system-wide unique identifier.",
+    "PHI/PII": true,
+    "HIPAA": true
+  },
+  {
+    "name": "network_mnemonic",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "A mnemonic representing the healthcare network associated with the encounter.  This may be useful for organizational or administrative purposes.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "medical_record_num",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "The patient's medical record number within the specific facility or system.  This is often used for internal identification and record retrieval.",
+    "PHI/PII": true,
+    "HIPAA": true
+  },
+  {
+    "name": "coid",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "The Case Object Identifier (COID), which may represent a specific case or episode of care related to the encounter.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "facility_mnemonic",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "A mnemonic representing the facility where the encounter took place. Useful for identifying the location of care.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "fhir_visit_status",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "The FHIR-compliant status of the visit/encounter (e.g., planned, arrived, in-progress, finished, cancelled).  This reflects the current state of the encounter.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "fhir_patient_class_code",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "The FHIR code representing the patient's class (e.g., inpatient, outpatient, emergency).  This categorizes the type of encounter.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "fhir_patient_class_display",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "The human-readable display value corresponding to the FHIR patient class code.  Provides a clear description of the patient's class.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "patient_type",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "A more granular classification of the patient type (e.g., observation, surgery, newborn).  Provides additional context about the encounter.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "admission_type",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "The type of admission (e.g., emergency, elective, urgent).  Relevant for inpatient encounters.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "patient_class_code",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "A code representing the patient's class, potentially from a system-specific coding system.  May differ from the FHIR patient class code.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "account_status_code",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "A code representing the status of the patient's account (e.g., open, closed, pending).  Relates to billing and administrative processes.",
+    "PHI/PII": false,
+    "HIPAA": true
+  },
+  {
+    "name": "vip_indicator_code",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "A code indicating whether the patient is considered a VIP (Very Important Person).  Used for special handling or accommodations.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "financial_class_code",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "A code representing the patient's financial class (e.g., insurance type, self-pay).  Used for billing and financial reporting.",
+    "PHI/PII": true,
+    "HIPAA": true
+  },
+  {
+    "name": "mode_of_arrival_code",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "A code indicating how the patient arrived at the facility (e.g., ambulance, walk-in, transfer).  Provides context about the encounter.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "accommodation_code",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Represents a code for the specific accommodation provided to the patient during the encounter.  This could indicate details like a private room, semi-private room, or other accommodation types.  It is typically mapped to a controlled vocabulary.",
+    "PHI/PII": true,
+    "HIPAA": true
+  },
+  {
+    "name": "accommodation_code_category",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Represents a broader category for the accommodation code, providing a higher-level grouping of accommodation types. For example, 'private', 'shared', or 'ward'.",
+    "PHI/PII": true,
+    "HIPAA": true
+  },
+  {
+    "name": "hospital_service_type_code",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Represents the code for the type of hospital service provided during the encounter (e.g., cardiology, oncology, etc.).  This is typically mapped to a controlled vocabulary.",
+    "PHI/PII": true,
+    "HIPAA": true
+  },
+  {
+    "name": "hospital_service_type_text",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Provides a human-readable description of the hospital service type, corresponding to the hospital_service_type_code.",
+    "PHI/PII": true,
+    "HIPAA": true
+  },
+  {
+    "name": "admit_source_code",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Indicates the source of the admission, such as physician referral, emergency room, or transfer from another facility.  This is typically coded using a standard terminology.",
+    "PHI/PII": true,
+    "HIPAA": true
+  },
+  {
+    "name": "discharge_disposition",
+    "type": "RECORD",
+    "mode": "REPEATED",
+    "fields": [
+      {
+        "name": "code",
+        "type": "STRING",
+        "description": "Code for the disposition of the patient at discharge (e.g., home, skilled nursing facility).",
+        "PHI/PII": true,
+        "HIPAA": true
+      },
+      {
+        "name": "display",
+        "type": "STRING",
+        "description": "Human-readable description of the discharge disposition code.",
+        "PHI/PII": true,
+        "HIPAA": true
+      }
+    ],
+    "description": "Information about the patient's disposition after discharge from the encounter.",
+    "PHI/PII": true,
+    "HIPAA": true
+  },
+  {
+    "name": "patient_id",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Identifier for the patient associated with the encounter. This is a crucial link to the Patient resource.",
+    "PHI/PII": true,
+    "HIPAA": true
+  },
+  {
+    "name": "appointment_id",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Identifier for the appointment that initiated or is associated with this encounter.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "account_id",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Identifier for the account associated with the encounter, typically used for billing purposes.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "deceased_date_time",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Date and time of the patient's death, if applicable to this encounter.  This field is relevant for encounters where the patient passed away.",
+    "PHI/PII": true,
+    "HIPAA": true
+  },
+  {
+    "name": "admission_date",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "The date the patient was admitted for the encounter, if applicable.  This is relevant for inpatient or other encounters involving a formal admission process.",
+    "PHI/PII": true,
+    "HIPAA": true
+  },
+  {
+    "name": "discharge_date",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "The date and time the patient was discharged from the encounter. Marks the end of the encounter and is crucial for determining duration, billing, and clinical documentation.",
+    "PHI/PII": true,
+    "HIPAA": true
+  },
+  {
+    "name": "is_valid_date_ind",
+    "type": "BOOLEAN",
+    "mode": "NULLABLE",
+    "description": "Indicates whether the date information associated with the encounter is considered valid. This can be used for data quality control.",
+    "PHI/PII": false,
+    "HIPAA": false
+  },
+  {
+    "name": "alt_admission_date_time",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "An alternative admission date and time, if available. This might be used if there's a discrepancy or a need to record a secondary admission time.",
+    "PHI/PII": true,
+    "HIPAA": true
+  },
+  {
+    "name": "hl7_admission_date_time",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Admission date and time as specifically received in an HL7 message.  This field preserves the original HL7 data for traceability and interoperability.",
+    "PHI/PII": true,
+    "HIPAA": true
+  },
+  {
+    "name": "alt_discharge_date_time",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Alternative representation of the discharge date and time.  May be used if the primary system's format differs from FHIR's.  Important for data integration and reconciliation.",
+    "PHI/PII": true,
+    "HIPAA": true
+  },
+  {
+    "name": "hl7_discharge_date_time",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Discharge date and time as represented in the native HL7 message. Preserves the original format for auditing and interoperability purposes.",
+    "PHI/PII": true,
+    "HIPAA": true
+  },
+  {
+    "name": "reason_for_visit_text",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Free-text description of the reason for the encounter/visit.  Provides additional context not captured in coded fields.  Should be used judiciously due to variability in natural language.",
+    "PHI/PII": true,
+    "HIPAA": true
+  },
+  {
+    "name": "mt_reason_for_visit_code",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Coded representation of the reason for visit, likely using a standard terminology (e.g., SNOMED CT, ICD-10). Enables more structured querying and analysis.",
+    "PHI/PII": true,
+    "HIPAA": true
+  },
+  {
+    "name": "patient_location",
+    "type": "RECORD",
+    "mode": "REPEATED",
+    "description": "Information about the patient's location during the encounter. Can include multiple locations if the patient moved during the encounter.",
+    "PHI/PII": true,
+    "HIPAA": true,
+    "fields": [
+      {
+        "name": "location_id",
+        "type": "STRING",
+        "description": "Identifier for the location, which could be a room number, bed ID, or internal system code.",
+        "PHI/PII": false,
+        "HIPAA": false
+      },
+      {
+        "name": "mnemonic",
+        "type": "STRING",
+        "description": "A short, memorable code or abbreviation for the location.",
+        "PHI/PII": false,
+        "HIPAA": false
+      },
+      {
+        "name": "physical_type",
+        "type": "STRING",
+        "description": "Categorization of the location's physical type (e.g., 'room', 'bed', 'department').",
+        "PHI/PII": false,
+        "HIPAA": false
+      }
+    ]
+  },
+  {
+    "name": "emergency_department",
+    "type": "RECORD",
+    "mode": "NULLABLE",
+    "description": "Specific information related to Emergency Department encounters.  Includes arrival, triage, departure times, and other ED-specific details.",
+    "PHI/PII": true,
+    "HIPAA": true,
+    "fields": [
+      {
+        "name": "edm_arrived_date_time",
+        "type": "STRING",
+        "description": "Date and time the patient arrived at the Emergency Department.",
+        "PHI/PII": true,
+        "HIPAA": true
+      },
+      {
+        "name": "edm_triaged_date_time",
+        "type": "STRING",
+        "description": "Date and time the patient was triaged in the Emergency Department.",
+        "PHI/PII": true,
+        "HIPAA": true
+      },
+      {
+        "name": "edm_departure_date_time",
+        "type": "STRING",
+        "description": "Date and time the patient departed from the Emergency Department.",
+        "PHI/PII": true,
+        "HIPAA": true
+      },
+      {
+        "name": "coid",
+        "type": "STRING",
+        "description": "Check-out ID or similar identifier related to the ED visit.",
+        "PHI/PII": false,
+        "HIPAA": false
+      },
+      {
+        "name": "priority_rank",
+        "type": "STRING",
+        "description": "Numerical rank indicating the patient's priority (e.g., 1, 2, 3).",
+        "PHI/PII": true,
+        "HIPAA": true
+      },
+      {
+        "name": "priority_code",
+        "type": "STRING",
+        "description": "Coded representation of the patient's priority (e.g., ESI level).",
+        "PHI/PII": true,
+        "HIPAA": true
+      },
+      {
+        "name": "priority_text",
+        "type": "STRING",
+        "description": "Textual description of the patient's priority (e.g., 'Immediate', 'Delayed').",
+        "PHI/PII": true,
+        "HIPAA": true
+      },
+      {
+        "name": "edm_reason_for_visit_code",
+        "type": "STRING",
+        "description": "Coded reason for visit specific to the Emergency Department context.",
+        "PHI/PII": true,
+        "HIPAA": true
+      },
+      {
+        "name": "edm_reason_for_visit_text",
+        "type": "STRING",
+        "description": "Free-text reason for visit specific to the Emergency Department context.",
+        "PHI/PII": true,
+        "HIPAA": true
+      },
+      {
+        "name": "departure_info",
+        "type": "RECORD",
+        "description": "Information about the patient's departure from the ED.",
+        "PHI/PII": true,
+        "HIPAA": true,
+        "fields": [
+          {
+            "name": "departure_disposition_code",
+            "type": "STRING",
+            "description": "Coded value for the patient's disposition upon departure (e.g., admitted, discharged).",
+            "PHI/PII": true,
+            "HIPAA": true
+          },
+          {
+            "name": "departure_disposition_text",
+            "type": "STRING",
+            "description": "Textual description of the patient's disposition upon departure.",
+            "PHI/PII": true,
+            "HIPAA": true
+          },
+          {
+            "name": "departure_disposition_display",
+            "type": "STRING",
+            "description": "Human-readable display value for the departure disposition.",
+            "PHI/PII": true,
+            "HIPAA": true
+          },
+          {
+            "name": "departure_condition_code",
+            "type": "STRING",
+            "description": "Coded value for the patient's condition upon departure.",
+            "PHI/PII": true,
+            "HIPAA": true
+          },
+          {
+            "name": "departure_condition_text",
+            "type": "STRING",
+            "description": "Textual description of the patient's condition upon departure.",
+            "PHI/PII": true,
+            "HIPAA": true
+          },
+          {
+            "name": "departure_condition_display",
+            "type": "STRING",
+            "description": "Human-readable display value for the departure condition.",
+            "PHI/PII": true,
+            "HIPAA": true
+          },
+          {
+            "name": "departure_comments",
+            "type": "STRING",
+            "description": "Additional comments related to the patient's departure.",
+            "PHI/PII": true,
+            "HIPAA": true
+          }
+        ]
+      },
+      {
+        "name": "patient_location",
+        "type": "RECORD",
+        "description": "Patient location information within the ED.",
+        "PHI/PII": false,
+        "HIPAA": false,
+        "fields": [
+          {
+            "name": "treatment_room",
+            "type": "RECORD",
+            "description": "Details of the treatment room.",
+            "PHI/PII": false,
+            "HIPAA": false,
+            "fields": [
+              {
+                "name": "room_code",
+                "type": "STRING",
+                "description": "Code for the treatment room.",
+                "PHI/PII": false,
+                "HIPAA": false
+              },
+              {
+                "name": "room_text",
+                "type": "STRING",
+                "description": "Textual description or name of the treatment room.",
+                "PHI/PII": false,
+                "HIPAA": false
+              }
+            ]
+          },
+          {
+            "name": "edm_location",
+            "type": "RECORD",
+            "description": "General location within the ED.",
+            "PHI/PII": false,
+            "HIPAA": false,
+            "fields": [
+              {
+                "name": "location_code",
+                "type": "STRING",
+                "description": "Code for the ED location.",
+                "PHI/PII": false,
+                "HIPAA": false
+              },
+              {
+                "name": "location_text",
+                "type": "STRING",
+                "description": "Textual description of the ED location.",
+                "PHI/PII": false,
+                "HIPAA": false
+              }
+            ]
+          },
+          {
+            "name": "reserved_room",
+            "type": "RECORD",
+            "description": "Details of any reserved room.",
+            "PHI/PII": false,
+            "HIPAA": false,
+            "fields": [
+              {
+                "name": "room_code",
+                "type": "STRING",
+                "description": "Code for the reserved room.",
+                "PHI/PII": false,
+                "HIPAA": false
+              },
+              {
+                "name": "room_text",
+                "type": "STRING",
+                "description": "Textual description or name of the reserved room.",
+                "PHI/PII": false,
+                "HIPAA": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "edm_transport",
+        "type": "RECORD",
+        "description": "Information about patient transport related to the ED visit.",
+        "PHI/PII": true,
+        "HIPAA": true,
+        "fields": [
+          {
+            "name": "transport_company_code",
+            "type": "STRING",
+            "description": "Code for the transport company.",
+            "PHI/PII": false,
+            "HIPAA": false
+          },
+          {
+            "name": "transport_company_display",
+            "type": "STRING",
+            "description": "Display name of the transport company.",
+            "PHI/PII": false,
+            "HIPAA": false
+          },
+          {
+            "name": "transport_id_code",
+            "type": "STRING",
+            "description": "Identifier for the specific transport instance.",
+            "PHI/PII": false,
+            "HIPAA": false
+          },
+          {
+            "name": "transport_id_display",
+            "type": "STRING",
+            "description": "Display value for the transport identifier.",
+            "PHI/PII": false,
+            "HIPAA": false
+          },
+          {
+            "name": "transport_call_date_time",
+            "type": "STRING",
+            "description": "Date and time the transport was called.",
+            "PHI/PII": true,
+            "HIPAA": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "registration_query",
+    "type": "RECORD",
+    "mode": "REPEATED",
+    "description": "Represents questions asked and responses given during patient registration.  Captures structured registration data.",
+    "PHI/PII": true,
+    "HIPAA": true,
+    "fields": [
+      {
+        "name": "mnemonic",
+        "type": "STRING",
+        "description": "Mnemonic or code for the registration question.",
+        "PHI/PII": false,
+        "HIPAA": false
+      },
+      {
+        "name": "question",
+        "type": "STRING",
+        "description": "The text of the registration question.",
+        "PHI/PII": false,
+        "HIPAA": false
+      },
+      {
+        "name": "response",
+        "type": "STRING",
+        "description": "The patient's response to the registration question.",
+        "PHI/PII": true,
+        "HIPAA": true
+      }
+    ]
+  },
+  {
+    "name": "insert_timestamp",
+    "type": "TIMESTAMP",
+    "mode": "NULLABLE",
+    "description": "Timestamp indicating when the encounter record was inserted into the database.  Used for auditing and data provenance.",
+    "PHI/PII": false,
+    "HIPAA": false
+  }
+]

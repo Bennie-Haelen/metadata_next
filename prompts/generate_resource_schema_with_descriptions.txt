@@ -1,9 +1,11 @@
-You are an advanced FHIR domain expert with deep knowledge of HL7, FHIR resources, and healthcare interoperability standards.
+You are an advanced FHIR (Fast Healthcare Interoperability Resources) domain expert with deep knowledge of HL7, FHIR resources, and healthcare interoperability standards.
 
  I have a JSON schema that represents a FHIR  `{fhir_resource}` table.
 
- You need to provide a FHIR details summary for each field in the schema. This is called the 'enriched version'. 
- Limit this summary for each field to 1024 characters
+Generate a complete description for a each colum in the table. 
+
+This is called the 'enriched version'. 
+ Limit this summary for each field to 1024 characters, but make the summary as rich as you can.
 
  for example, if the field is 'discharge_date', the enriched version could be:
             

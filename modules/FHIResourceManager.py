@@ -1,4 +1,7 @@
 import json
+import tiktoken  
+from typing import List, Dict
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from langchain.schema import HumanMessage
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
@@ -11,6 +14,8 @@ from logger_setup import logger, log_entry_exit
 # for either a column or a table, we did not make this a YAML parameter
 # since it is a constant value
 CHARACTER_LIMIT = 1024
+
+CHUNK_SIZE = 15
 
 class FHIRResourceManager:
     """
@@ -179,6 +184,176 @@ class FHIRResourceManager:
             logger.error(f"Error generating description for FHIR resource '{self._fhir_resource_name}': {e}")
             return None
 
+    #============================================================================================================
+
+
+    def count_tokens(self, text: str, model="gpt-4") -> int:
+        """
+        Counts the number of tokens in the given text.
+
+        Parameters:
+            text (str): The input text.
+            model (str): The LLM model being used.
+
+        Returns:
+            int: Token count of the input text.
+        """
+        tokenizer = tiktoken.encoding_for_model(model)
+        return len(tokenizer.encode(text))
+
+
+
+
+    # def semantic_chunking(self, data: List[Dict], chunk_size: int = CHUNK_SIZE) -> List[List[Dict]]:
+    #     """
+    #     Chunks the JSON data into smaller batches of related records.
+    #     """
+    #     return [data[i:i + chunk_size] for i in range(0, len(data), chunk_size)]
+    
+
+    def semantic_chunking(self, data, chunk_size=10):
+        """
+        Chunking that ensures fields, especially nested RECORD types, are not split across chunks.
+        """
+        chunks = []
+        current_chunk = []
+        current_size = 0
+
+        for record in data:
+            # Check if adding this record would exceed chunk size
+            if current_size + 1 > chunk_size:
+                chunks.append(current_chunk)
+                current_chunk = []
+                current_size = 0
+
+            # Add the entire RECORD field if it's nested, to prevent cutting off
+            if record.get('type', '').lower() == 'record':
+                current_chunk.append(record)
+            else:
+                current_chunk.append(record)
+            
+            current_size += 1
+
+        if current_chunk:  # Append any remaining records
+            chunks.append(current_chunk)
+
+        return chunks
+
+
+
+    
+
+
+
+    # Function to process a chunk (you can replace this with LLM processing)
+    @log_entry_exit
+    def process_chunk(self, chunk: List[Dict]):
+        """
+        Processes each chunk of data. Here, it's a placeholder for LLM integration.
+        """
+        # We use the JSON Output Parser to extract the JSON array from the response
+        # Using this parser, we get very predictable results, and we do not have
+        # to worry about the structure of the response and extra "bits" emitted
+        # by the LLM model
+        parser = JsonOutputParser()
+        instructions = parser.get_format_instructions()
+
+        # Retrieve the appropriate prompt template from our prompt database
+        prompt_name = prompt_names.GENERATE_RESOURCE_SCHEMA_DESCRIPTIONS
+        prompt_template_str = read_prompt_template(prompt_name, "prompts")
+
+        # Set up the prompt template with the expected input variables                  
+        prompt_template = PromptTemplate(
+            input_variables=["input_json_schema", "fhir_resource", "character_length"],
+            template=prompt_template_str)
+
+        # Format the prompt with the chunk
+        prompt = prompt_template.format(
+                        fhir_resource=self.fhir_resource_name, 
+                        character_length = CHARACTER_LIMIT,
+                        input_json_schema=json.dumps(chunk, indent=2))
+        logger.info(f"Prepared the prompt...")
+
+        # Measure prompt size in tokens
+        token_count = self.count_tokens(prompt)
+        logger.info(f"Prompt size: {token_count} tokens before sending to LLM.")
+
+        # Create a message array containing the formatted prompt
+        messages = [HumanMessage(content=prompt)]
+        
+        # Send request to LLM
+        logger.info(f"Invoking the LLM model...")
+        response = self.llm_model.invoke(input=messages).content
+        logger.info(f"LLM invocation completed successfully...")
+
+        enriched_chunk = ""
+        # Parse response and extend enriched schema
+        try:
+            # Use the JSsonOutputParser to extract the JSON array from the response,
+            # and add it to the enriched schema
+            enriched_chunk = parser.parse(response)
+
+        except json.JSONDecodeError as e:
+            logger.error(f"Error parsing JSON for chunk, error:{e}")
+
+        bennie_chunk = {
+            "bennie": enriched_chunk
+        }
+
+        retval =  json.dumps(bennie_chunk, indent=2)
+
+        return retval
+
+
+
+
+    @log_entry_exit
+    def generate_enriched_schema_with_semantic_chunking(self, json_schema):
+        logger.info(f"Generating enriched schema for FHIR resource: {self._fhir_resource_name}")
+
+        combined_results = []
+
+        try:
+            # Since we cannot retrieve the context window sie from the LLM model, we will use a 
+            # fixed size here
+            context_window_size = 8192
+            logger.info(f"Assuming a context window size of {context_window_size} tokens...")
+
+            # Count the number of tokens in the document
+            document_length_in_tokens = self.count_tokens(json.dumps(json_schema))
+            logger.info(f"Document length in tokens: {document_length_in_tokens}")
+            
+            # Split the data into semantic chunks
+            chunks = self.semantic_chunking(json_schema, chunk_size=CHUNK_SIZE)
+            logger.info(f"Splitting schema into a total of {len(chunks)} chunks...")
+
+            # Process chunks in parallel and handle exceptions per future
+            with ThreadPoolExecutor(max_workers=4) as executor:
+                future_to_chunk = {executor.submit(self.process_chunk, chunk): chunk for chunk in chunks}
+
+                for future in as_completed(future_to_chunk):
+                    try:
+                        result = future.result()
+                        if result:
+                            logger.info(f"Chunk processed successfully.")
+                            parsed_result = json.loads(result)
+                            combined_results.extend(parsed_result.get("bennie", []))  # Combine 'bennie' arrays
+                        else:
+                            logger.warning(f"Empty result returned for chunk.")
+                    except Exception as e:
+                        logger.error(f"Exception occurred while processing chunk: {e}")
+
+            if combined_results:
+                return combined_results
+            else:
+                logger.warning("No results were returned from processing chunks.")
+                print("No results were returned.")
+
+        except Exception as e:
+            logger.error(f"Error generating schema with description for FHIR resource: {self._fhir_resource_name}: {e}")
+            print(f"Exception in main function: {e}")
+
+    #============================================================================================================
 
     @log_entry_exit  
     def generate_enriched_schema(self, json_schema):

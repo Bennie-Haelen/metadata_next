@@ -196,15 +196,20 @@ def main():
     logger.info(f"Table Description Generated...")
 
 
-    # Create an enriched schema with additional descriptions for each field
-    logger.info("Generating enriched schema with descriptions...")
-    enriched_schema = fhir_mgr.generate_enriched_schema(schema)
+    logger.info("Generating enriched schema with descriptions, using semantic chunking")
+    enriched_schema = fhir_mgr.generate_enriched_schema_with_semantic_chunking(schema)
     logger.info("Enriched schema generation completed.")
+
+
+    # Create an enriched schema with additional descriptions for each field
+    # logger.info("Generating enriched schema with descriptions...")
+    # enriched_schema = fhir_mgr.generate_enriched_schema(schema)
+    # logger.info("Enriched schema generation completed.")
 
     # Save the enriched schema to the output location
     save_enriched_schema(enriched_schema, output_schema_location)
     logger.info(f"Enriched schema successfully saved to: '{output_schema_location}'")
-    
+
     # Generate SQL statements (ALTER 
     # TABLE / CREATE TABLE) based on the mode
     logger.info("Starting the SQL generation process...")

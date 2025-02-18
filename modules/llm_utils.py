@@ -32,7 +32,8 @@ def get_llm(model_name):
         
         # Initialize Google Gemini LLM
         logger.info(f"Using Google Generative AI model: {model_name}")
-        return ChatGoogleGenerativeAI(model=model_name, temperature=0.0) 
+        llm = ChatGoogleGenerativeAI(model=model_name, temperature=0.0) 
+        max_tokens = llm.max
     
     else:
     

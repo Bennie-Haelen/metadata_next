@@ -23,8 +23,7 @@ def read_prompt_template(template_name: str, prompts_dir: str = "prompts") -> st
         If the template file does not exist in the specified directory.
     """
 
-    logger.info(f"Reading prompt template: {template_name}")
-    
+   
     # Construct the full path to the template file
     template_path = os.path.join(prompts_dir, template_name)
 
