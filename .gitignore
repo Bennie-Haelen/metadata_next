@@ -179,3 +179,4 @@ cloud_run_deploy.sh
 yaml/encounters_bkup.yaml
 fhir/
 sql/
+myenv/
