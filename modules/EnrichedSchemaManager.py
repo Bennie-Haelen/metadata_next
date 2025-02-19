@@ -5,9 +5,6 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from langchain.schema import HumanMessage
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
-
-from prompts.read_prompt_template import read_prompt_template
-from prompts import prompt_names
 from logger_setup import logger, log_entry_exit
 
 # This is the max length of the description that can be stored in BigQuery
@@ -17,15 +14,15 @@ CHARACTER_LIMIT = 1024
 
 CHUNK_SIZE = 15
 
-class FHIRResourceManager:
+class EnrichedSchemaManager:
     """
-    This class encapsulates the functionality to manage FHIR resources in the context of BigQuery tables.
+    This class encapsulates the functionality to manage schema enrichment resources in the context of BigQuery tables.
     """
 
     @log_entry_exit
-    def __init__(self, llm, full_table_name):
+    def __init__(self, llm, full_table_name, prefix,suffix):
         """
-        Initializes the FHIRResourceManager instance.
+        Initializes the EnrichedSchemaManager instance.
 
         Parameters:
         - llm: The language model instance. Used for LLM processing in the class.
@@ -34,7 +31,7 @@ class FHIRResourceManager:
 
         Attributes:
         - self.llm_model: Stores the provided language model instance.
-        - self._fhir_resource_name: Extracts and stores the FHIR resource name derived 
+        - self._resource_name: Extracts and stores the resource name derived 
                                     from the provided BigQuery table name.
         - self._full_table_name: Stores the provided full table name.
         """
@@ -44,26 +41,30 @@ class FHIRResourceManager:
 
         # Store the provided full table name
         self._full_table_name = full_table_name
+        if prefix:
+            self._full_table_name = f"{prefix}_{self._full_table_name}"
+        if suffix:
+            self._full_table_name = f"{self._full_table_name}_{suffix}"
 
-        # Extract and store the FHIR resource name
-        self._fhir_resource_name = self._extract_fhir_resource_name(full_table_name) 
+        # Extract and store the resource name
+        self._resource_name = self._extract_resource_name(full_table_name) 
 
 
 
     @property
-    def fhir_resource_name(self):
+    def resource_name(self):
         """
-        Read-only property to access the FHIR resource name.
+        Read-only property to access the resource name.
 
-        This property provides access to the extracted FHIR resource name without allowing 
+        This property provides access to the extracted resource name without allowing 
         direct modification. The value is set during object initialization and retrieved when accessed.
 
         Returns:
-        - str: The extracted FHIR resource name.
+        - str: The extracted resource name.
         """
 
-        # Return the stored FHIR resource name
-        return self._fhir_resource_name  
+        # Return the stored resource name
+        return self._resource_name  
 
 
 
@@ -82,9 +83,9 @@ class FHIRResourceManager:
     
 
     @log_entry_exit  
-    def _extract_fhir_resource_name(self, full_table_name: str) -> str:
+    def _extract_resource_name(self, full_table_name: str) -> str:
         """
-        Extracts and converts a BigQuery table name into a FHIR resource name.
+        Extracts and converts a BigQuery table name into a valid resource name.
 
         This method ensures the input follows the correct format for a fully qualified BigQuery table 
         name (i.e., it contains at least two periods). If the format is invalid, an exception is raised.
@@ -92,21 +93,20 @@ class FHIRResourceManager:
         Steps:
         1. Validate that the input contains at least two periods (e.g., "project.dataset.table_name").
         2. Extract the last segment of the table name after the final period.
-        3. If the extracted name starts with "fhir_", remove the prefix.
-        4. Log the extracted resource name and return it.
+        3. Log the extracted resource name and return it.
 
         Parameters:
         - full_table_name (str): The fully qualified BigQuery table name in the format 
         "project.dataset.table_name".
 
         Returns:
-        - str: The cleaned FHIR resource name (i.e., table name without "fhir_" prefix).
+        - str: The cleaned resource name (i.e., table name without any prefix).
 
         Raises:
         - ValueError: If the input does not contain at least two periods, indicating an invalid format.
         """
 
-        logger.info(f"Extracting FHIR resource name from table name: {full_table_name}")
+        logger.info(f"Extracting resource name from table name: {full_table_name}")
 
         # Validate input format: Ensure it contains at least two periods
         if full_table_name.count(".") < 2:
@@ -114,36 +114,36 @@ class FHIRResourceManager:
             logger.error(error_message)
             raise ValueError(error_message)
 
-        # Extract the last part of the table name and clean it by removing "fhir_" prefix if present
-        resource_name = full_table_name.split(".")[-1].replace("fhir_", "")
+        # Extract the last part of the table name 
+        resource_name = full_table_name.split(".")[-1]
         
-        logger.info(f"Extracted FHIR resource name: {resource_name}")
+        logger.info(f"Extracted resource name: {resource_name}")
 
         return resource_name
 
 
 
     @log_entry_exit  # Decorator for logging function entry and exit
-    def generate_table_description(self):
+    def generate_table_description(self, prompt_template_str: str) -> str:
         """ 
-        Generates a description for a FHIR resource name using an LLM. 
+        Generates a description for the resource name using an LLM. 
         This description is at the resource (or table) level, so it
         describes the resource as a whole.
 
         This method constructs a prompt dynamically using a stored prompt template and 
-        then invokes the LLM model to generate a description of the given FHIR resource.
+        then invokes the LLM model to generate a description of the given resource.
 
         Steps:
         1. Ensure the LLM model is initialized; otherwise, return a fallback message.
         2. Retrieve the appropriate prompt template from the database using its name.
         3. Set up a `PromptTemplate` to format the retrieved prompt.
-        4. Inject the `fhir_resource_name` into the prompt and construct a message array.
+        4. Inject the `resource_name` into the prompt and construct a message array.
         5. Invoke the LLM model to generate a description.
         6. Log the successful generation and return the description.
         7. Handle any errors gracefully and log them.
 
         Returns:
-        - str: The generated description for the FHIR resource.
+        - str: The generated description for the resource.
         If the LLM model is not available, returns `"No description available."`
         If an error occurs, logs the error and returns `None`.
         """
@@ -154,18 +154,17 @@ class FHIRResourceManager:
 
         try:
             # Retrieve the prompt template from the database
-            prompt_name = prompt_names.GET_TABLE_DESCRIPTION
-            prompt_template_str = read_prompt_template(prompt_name)
-
+            
+            
             # Set up the prompt template with the expected input variable
             prompt_template = PromptTemplate(
                 input_variables=["table_name", "description_length"],
                 template=prompt_template_str
             )
 
-            # Format the prompt by injecting the FHIR resource name
+            # Format the prompt by injecting the resource name
             prompt = prompt_template.format(
-                            table_name=self.fhir_resource_name, 
+                            table_name=self.resource_name, 
                             description_length=CHARACTER_LIMIT) 
 
             # Create a message array containing the formatted prompt
@@ -175,13 +174,13 @@ class FHIRResourceManager:
             description = self.llm_model.invoke(input=messages).content
 
             # Log successful retrieval of the description
-            logger.info(f"Generated description for FHIR resource '{self._fhir_resource_name}' successfully retrieved.")
+            logger.info(f"Generated description for resource '{self._resource_name}' successfully retrieved.")
 
             return description
 
         except Exception as e:
             # Log the error and return None in case of failure
-            logger.error(f"Error generating description for FHIR resource '{self._fhir_resource_name}': {e}")
+            logger.error(f"Error generating description for resource '{self._resource_name}': {e}")
             return None
 
     #============================================================================================================
@@ -247,7 +246,7 @@ class FHIRResourceManager:
 
     # Function to process a chunk (you can replace this with LLM processing)
     @log_entry_exit
-    def process_chunk(self, chunk: List[Dict]):
+    def process_chunk(self, chunk: List[Dict], prompt_template_str: str) -> str:
         """
         Processes each chunk of data. Here, it's a placeholder for LLM integration.
         """
@@ -259,17 +258,17 @@ class FHIRResourceManager:
         instructions = parser.get_format_instructions()
 
         # Retrieve the appropriate prompt template from our prompt database
-        prompt_name = prompt_names.GENERATE_RESOURCE_SCHEMA_DESCRIPTIONS
-        prompt_template_str = read_prompt_template(prompt_name, "prompts")
+    
+        prompt_template_str = prompt_template_str
 
         # Set up the prompt template with the expected input variables                  
         prompt_template = PromptTemplate(
-            input_variables=["input_json_schema", "fhir_resource", "character_length"],
+            input_variables=["input_json_schema", "resource_name", "character_length"],
             template=prompt_template_str)
 
         # Format the prompt with the chunk
         prompt = prompt_template.format(
-                        fhir_resource=self.fhir_resource_name, 
+                        resource_name=self.resource_name, 
                         character_length = CHARACTER_LIMIT,
                         input_json_schema=json.dumps(chunk, indent=2))
         logger.info(f"Prepared the prompt...")
@@ -313,8 +312,13 @@ class FHIRResourceManager:
 
 
     @log_entry_exit
-    def generate_enriched_schema_with_semantic_chunking(self, json_schema):
-        logger.info(f"Generating enriched schema for FHIR resource: {self._fhir_resource_name}")
+    def generate_enriched_schema_with_semantic_chunking(self, json_schema, prompt_template_str):
+        """
+        This method generates an enriched schema by adding column-level
+        descriptions for a given resource.
+        """
+
+        logger.info(f"Generating enriched schema for resource: {self._resource_name}")
 
         combined_results = []
 
@@ -334,7 +338,7 @@ class FHIRResourceManager:
 
             # Process chunks in parallel and handle exceptions per future
             with ThreadPoolExecutor(max_workers=4) as executor:
-                future_to_chunk = {executor.submit(self.process_chunk, chunk): chunk for chunk in chunks}
+                future_to_chunk = {executor.submit(self.process_chunk, chunk, prompt_template_str): chunk for chunk in chunks}
 
                 for future in as_completed(future_to_chunk):
                     try:
@@ -355,19 +359,19 @@ class FHIRResourceManager:
                 print("No results were returned.")
 
         except Exception as e:
-            logger.error(f"Error generating schema with description for FHIR resource: {self._fhir_resource_name}: {e}")
+            logger.error(f"Error generating schema with description for resource: {self._resource_name}: {e}")
             print(f"Exception in main function: {e}")
 
     #============================================================================================================
 
     @log_entry_exit  
-    def generate_enriched_schema(self, json_schema):
+    def generate_enriched_schema(self, json_schema, prompt_template_str):
         """
         This methoid generates an enriched schema by adding column-level 
-        descriptionss for a given FHIR resource.
+        descriptionss for a given resource.
 
         Args:
-        - json_schema (dict): The JSON schema for the FHIR resource.
+        - json_schema (dict): The JSON schema for the resource.
 
         Returns:
         - list: The enriched schema with the column descriptions.
@@ -380,7 +384,7 @@ class FHIRResourceManager:
         parser = JsonOutputParser()
         instructions = parser.get_format_instructions()
 
-        logger.info(f"Generating enriched schema for fhir resource: {self._fhir_resource_name}")
+        logger.info(f"Generating enriched schema for resource: {self._resource_name}")
 
         try:
             # Define chunk size (e.g., process 10 fields at a time)
@@ -392,14 +396,9 @@ class FHIRResourceManager:
             logger.info(f"Splitting schema into chunks of {chunk_size} fields...")
             schema_chunks = [json_schema[i:i + chunk_size] for i in range(0, len(json_schema), chunk_size)]
     
-
-            # Retrieve the appropriate prompt template from our prompt database
-            prompt_name = prompt_names.GENERATE_RESOURCE_SCHEMA_DESCRIPTIONS
-            prompt_template_str = read_prompt_template(prompt_name, "prompts")
-
             # Set up the prompt template with the expected input variables                  
             prompt_template = PromptTemplate(
-                input_variables=["input_json_schema", "fhir_resource", "character_length"],
+                input_variables=["input_json_schema", "resource_name", "character_length"],
                 template=prompt_template_str)
 
             # Process each chunk
@@ -409,7 +408,7 @@ class FHIRResourceManager:
 
                 # Format the prompt with the chunk
                 prompt = prompt_template.format(
-                                fhir_resource=self.fhir_resource_name, 
+                                resource_name=self.resource_name, 
                                 character_length = CHARACTER_LIMIT,
                                 input_json_schema=json.dumps(chunk, indent=2))
 
@@ -424,16 +423,19 @@ class FHIRResourceManager:
                     # Use the JSsonOutputParser to extract the JSON array from the response,
                     # and add it to the enriched schema
                     enriched_chunk = parser.parse(response)
+                    logger.info(f"Chunk processed successfully. Response: {response}")
                     enriched_schema.extend(enriched_chunk)
 
                 except json.JSONDecodeError as e:
                     logger.error(f"Error parsing JSON for chunk {idx + 1}. error:{e}")
+                except Exception as e:
+                    logger.error(f"Error processing chunk# {idx + 1} chunk {chunk}\n. Response{response}\n error:{e}")
 
             logger.info("Creation of enriched schema completed successfully...")
             return enriched_schema
             
         except Exception as e:
-            logger.error(f"Error generating schema with description for fhir resource: {self._fhir_resource_name}': {e}")
+            logger.error(f"Error generating schema with description for resource: {self._resource_name}': {e}")
 
 
 
@@ -700,7 +702,7 @@ class FHIRResourceManager:
         provided schema and the passed-in mode
 
         args:
-            - json_schema (dict): The JSON schema for the FHIR resource.
+            - json_schema (dict): The JSON schema for the resource.
             - table_description (str): The description for the table.
             - mode (str): The mode to use, either "create" or "alter".
 

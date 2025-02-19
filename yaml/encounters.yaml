@@ -7,10 +7,19 @@ app:
 
 # GCP Configuration
 bigquery:
-  project_id: 'hca-sandbox'
-  dataset_id: 'LLM_Test'
-  table_id: 'fhir_encounters'
-  location: 'us'
+  job:
+    location: "US"
+    project_id: "hca-sandbox"
+  source:
+    project_id: 'hca-sandbox'
+    dataset_id: 'LLM_Test'
+    table_id: '*encounters*' # can be empty or a wild card string or exact table name or a list of table names
+    exclusion_list: ['hde_encounters_source','fhir_encounters'] # can be empty or a wild card string or exact table name or a list of table names
+  destination:
+    project_id: 'hca-sandbox'
+    dataset_id: 'LLM_Test'
+    table_prefix: 
+    table_suffix: 'enriched'
   mode: "create"
 
 # Logging configuration
@@ -20,10 +29,10 @@ logging:
 
 # File paths
 files:
-  input_schema: "fhir/hde_encounters.json"
-  output_schema: "fhir/hde_encounters_enriched.json"
-  sql_output: "sql/create_table.sql"
+  table_description_prompt_template: "gs://hca-metadata-stg/prompts/table_description_prompt_template.txt"
+  schema_description_prompt_template: "gs://hca-metadata-stg/prompts/schema_description_prompt_template.txt"
+  output_gcs_location: "gs://hca-metadata-stg"
 
 llm:
-  # model: "gpt-4o"
+  #model: "gpt-4o"
   model: "gemini-2.0-flash-001"

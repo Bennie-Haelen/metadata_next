@@ -9,7 +9,7 @@ from logger_setup import logger, log_entry_exit
 
 # Function to initialize the LangChain LLM (Language Learning Model)
 @log_entry_exit  # Decorator for logging function entry and exit
-def get_llm(model_name):
+def get_llm(model_name, api_key=None):
     """
     Initializes and returns an appropriate LangChain LLM model based on the provided model name.
     
@@ -32,7 +32,10 @@ def get_llm(model_name):
         
         # Initialize Google Gemini LLM
         logger.info(f"Using Google Generative AI model: {model_name}")
-        llm = ChatGoogleGenerativeAI(model=model_name, temperature=0.0) 
+        if api_key:
+            llm = ChatGoogleGenerativeAI(model=model_name, temperature=0.0,api_key=api_key) 
+        else:
+            llm = ChatGoogleGenerativeAI(model=model_name, temperature=0.0)
 
         if llm is None:
             raise ValueError(f"Google Generative AI model '{model_name}' not found.")

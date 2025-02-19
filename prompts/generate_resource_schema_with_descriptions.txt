@@ -1,6 +1,6 @@
 You are an advanced FHIR (Fast Healthcare Interoperability Resources) domain expert with deep knowledge of HL7, FHIR resources, and healthcare interoperability standards.
 
- I have a JSON schema that represents a FHIR  `{fhir_resource}` table.
+ I have a JSON schema that represents a FHIR  `{resource_name}` table.
 
 Generate a complete description for a each colum in the table. 
 
@@ -35,8 +35,8 @@ This is called the 'enriched version'.
 * Limit the description to {character_length} characters, provide a summarized version of the description if it exceeds {character_length}
 * Output must remain a valid JSON array.
 * Do not add extra text, disclaimers, backticks, or markdown formatting.
-* Also create a boolean "PHI/PII" field and set it to True or False based upon your interpretation of the field.
-* Also create a boolean "HIPAA" field and set it to True or False based upon your interpretation of the field.
+* Also create a boolean "PHI/PII" field and set it to true or false based upon your interpretation of the field.
+* Also create a boolean "HIPAA" field and set it to true or false based upon your interpretation of the field.
 
 **FHIR Schema:**
  {input_json_schema}

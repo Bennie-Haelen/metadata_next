@@ -2,12 +2,12 @@ import json
 from google.cloud import bigquery
 
 class BigQuerySchemaManager:
-    def __init__(self, project_id, dataset_id):
-        self.client = bigquery.Client(project=project_id)
-        self.dataset_id = dataset_id
+    def __init__(self, bq_project_id, location='us'):
+        self.client = bigquery.Client(project=bq_project_id, location=location)
+        #self.dataset_id = dataset_id
 
     def get_table_schema(self, table_name, format="DDL"):
-        table_ref = f"{self.client.project}.{self.dataset_id}.{table_name}"
+        table_ref = table_name # f"{self.client.project}.{self.dataset_id}.{table_name}"
         table = self.client.get_table(table_ref)
         
         if format.upper() == "DDL":
