@@ -177,7 +177,7 @@ def main():
     logger.info("Fetching the list of tables to be processed...")
     table_list = list_bigquery_tables(bq_job_project_id, bq_job_location, bq_source_project_id, bq_source_dataset_id, bq_source_table_id, bq_source_exclusion_list)
     logger.info(f"Tables to be processed: {table_list}")
-    exit(1)
+    
     if table_list:
         tracker_file = f"{output_gcs_location}/{bq_source_project_id}/{bq_source_dataset_id}/tracker.json"
         table_description_prompt_template_str = read_from_gcs(table_description_prompt_template).encode('utf-8').decode('utf-8')
